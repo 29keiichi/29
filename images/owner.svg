@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="750" height="1000" viewBox="0 0 750 1000">
+  <rect width="750" height="1000" fill="#d7dee5"/>
+  <circle cx="375" cy="360" r="130" fill="#9aa8b5"/>
+  <path d="M375 520 c-170 0 -255 110 -255 280 l510 0 c0 -170 -85 -280 -255 -280 z" fill="#9aa8b5"/>
+  <text x="375" y="890" text-anchor="middle" font-family="sans-serif" font-size="40" font-weight="bold" fill="#5f6b76">店長の写真</text>
+  <text x="375" y="945" text-anchor="middle" font-family="sans-serif" font-size="32" fill="#5f6b76">差し替え予定</text>
+</svg>

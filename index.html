@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>エアコンクリーニングイチロー｜横浜・川崎のエアコンクリーニング</title>
+<meta name="description" content="横浜・川崎のエアコンクリーニング。写真の店長がご自宅に伺います。壁掛けエアコン1台 11,500円（税込）。毎日9:00〜21:00、ネットで予約できます。">
+<meta property="og:image" content="images/ac-after.svg">
+<meta name="theme-color" content="#13294b">
+<link rel="stylesheet" href="common.css?v=4">
+<style>
+/* トップ：さわって比べる「before / after」 */
+.top{background:var(--navy);color:#fff;padding:22px 16px 26px;position:relative;overflow:hidden}
+.top::before{content:"";position:absolute;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(20,163,148,.35),transparent 70%);top:-150px;right:-120px}
+.top .kicker{position:relative;display:inline-block;font-size:12px;font-weight:700;color:#9fe3d9;border:1px solid rgba(159,227,217,.5);border-radius:999px;padding:2px 10px;margin:0 0 10px}
+.top h1{position:relative;font-size:27px;line-height:1.35;margin:0 0 8px;letter-spacing:.02em}
+.top h1 em{font-style:normal;color:#9fe3d9}
+.top .lead{position:relative;font-size:14px;color:#d3dcea;margin:0 0 16px}
+
+.ba{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:4/5;background:#222;user-select:none;touch-action:pan-y;box-shadow:0 18px 40px rgba(0,0,0,.35)}
+.ba img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
+.ba .b{clip-path:inset(0 calc(100% - var(--x,50%)) 0 0)}
+.ba .knob{position:absolute;top:0;bottom:0;left:var(--x,50%);width:3px;margin-left:-1.5px;background:#fff;pointer-events:none}
+.ba .knob::after{content:"‹ ›";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;border-radius:50%;background:#fff;color:var(--navy);font-weight:800;font-size:16px;display:grid;place-items:center;box-shadow:0 2px 10px rgba(0,0,0,.3);letter-spacing:2px}
+.ba .lb{position:absolute;top:10px;font-size:11px;font-weight:800;letter-spacing:.1em;padding:3px 9px;border-radius:6px;pointer-events:none}
+.ba .lb.l{left:10px;background:rgba(0,0,0,.6);color:#fff}
+.ba .lb.r{right:10px;background:var(--ac2);color:#fff}
+.ba input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
+.ba-cap{display:flex;justify-content:space-between;font-size:12px;margin-top:8px;color:#b9c6d6}
+.top .ba-cap{color:#b9c6d6}
+
+.stats{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:16px}
+.stats div{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:10px 6px;text-align:center;font-size:11px;line-height:1.35;color:#d3dcea}
+.stats b{display:block;font-size:20px;color:#fff;line-height:1.2;margin-bottom:2px}
+.stats b small{font-size:12px}
+
+.quick{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px;background:var(--ac-soft)}
+.quick .p small{display:block;font-size:12px;color:var(--ink2)}
+.quick .p b{font-size:24px;color:var(--navy)}
+.quick .p b small{display:inline;font-size:12px;color:var(--ink2);font-weight:600}
+.quick a{flex:none;width:auto;padding:12px 18px;font-size:15px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;padding:12px 16px 0}
+.tags span{font-size:12px;font-weight:700;color:var(--navy);background:#fff;border:1px solid var(--line);border-radius:999px;padding:3px 10px}
+.tags span::before{content:"✓ ";color:var(--ac)}
+
+/* 作業事例 */
+.cases{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:0 -16px 12px;padding:0 16px}
+.cases::-webkit-scrollbar{display:none}
+.cases button{flex:none;border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 13px;font-size:13px;font-weight:700;cursor:pointer;color:var(--ink2)}
+.cases button[aria-selected="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+#caseBox .ba{aspect-ratio:3/4}
+.sec .ba-cap{color:var(--ink2)}
+
+/* 料金 */
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.pgrid a{display:flex;flex-direction:column;gap:2px;border:1px solid var(--line);border-radius:12px;padding:12px;text-decoration:none;background:#fff;min-width:0}
+.pgrid a.wide{grid-column:1/-1}
+.pgrid .n{font-weight:700;font-size:14px;line-height:1.4}
+.pgrid .d{font-size:11px;color:var(--ink2);line-height:1.4;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.pgrid .p{margin-top:auto;padding-top:6px;font-weight:800;font-size:17px;color:var(--navy)}
+.pgrid .p small{font-size:11px;color:var(--ink2);font-weight:600}
+.pgrid .go{font-size:11px;color:var(--ac);font-weight:700}
+.pgroup{font-size:13px;font-weight:800;color:var(--ink2);margin:14px 0 8px}
+.pgroup:first-child{margin-top:0}
+.pane[hidden]{display:none}
+
+/* 店主 */
+.owner{display:flex;gap:14px;align-items:center;margin-bottom:14px}
+.owner img{width:92px;height:92px;border-radius:16px;object-fit:cover;object-position:center 30%;flex:none}
+.owner b{display:block;font-size:18px;color:var(--navy)}
+.owner span{font-size:12px;color:var(--ink2);line-height:1.5;display:block}
+.tl{list-style:none;margin:0;padding:0}
+.tl li{display:grid;grid-template-columns:4.6em minmax(0,1fr);gap:10px;padding:10px 0;border-bottom:1px dashed var(--line);font-size:14px}
+.tl li:last-child{border-bottom:0}
+.tl .y{font-weight:800;color:var(--ac);font-size:13px}
+.why{margin-top:12px;background:#fff;border-left:4px solid var(--ac);border-radius:0 10px 10px 0;padding:12px 14px;font-size:14px}
+.why b{display:block;color:var(--navy);margin-bottom:4px}
+.clients{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.clients span{font-size:12px;background:#fff;border:1px solid var(--line);border-radius:6px;padding:4px 8px}
+
+/* 口コミ */
+.rv-sum{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.rv-sum .big{font-size:40px;font-weight:800;color:var(--navy);line-height:1}
+.rv-sum .muted{line-height:1.5}
+.rv{border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:10px;background:#fff}
+.rv .who{display:flex;justify-content:space-between;font-size:12px;color:var(--ink2);margin-bottom:4px}
+.rv p{margin:0;font-size:14px}
+.rv.more-rv{display:none}
+.show-all .rv.more-rv{display:block}
+.btn-more{display:block;width:100%;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;font-weight:700;color:var(--navy);cursor:pointer}
+
+.flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;list-style:none;margin:0;padding:0;counter-reset:f}
+.flow li{counter-increment:f;text-align:center;font-size:12px;line-height:1.4;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 4px}
+.flow li::before{content:counter(f);display:grid;place-items:center;width:26px;height:26px;margin:0 auto 6px;border-radius:50%;background:var(--navy);color:#fff;font-weight:800;font-size:13px}
+.flow b{display:block;font-size:13px;color:var(--navy)}
+.flow-note{font-size:13px;color:var(--ink2);margin:10px 0 0}
+
+details.acc{border:1px solid var(--line);border-radius:12px;margin-bottom:8px;padding:0 14px;background:#fff}
+details.acc summary{cursor:pointer;font-weight:700;padding:13px 0;list-style:none;display:flex;justify-content:space-between;gap:8px}
+details.acc summary::-webkit-details-marker{display:none}
+details.acc summary::after{content:"＋";color:var(--ac)}
+details.acc[open] summary::after{content:"－"}
+details.acc .in{padding:0 0 12px;font-size:14px}
+details.acc ul{margin:.3em 0;padding-left:1.2em}
+details.acc p{margin:0 0 .5em}
+
+table.cancel{width:100%;border-collapse:collapse;font-size:14px}
+table.cancel td{padding:8px 0;border-bottom:1px solid var(--line)}
+table.cancel td:last-child{text-align:right;font-weight:700}
+
+.contact{display:grid;gap:8px;margin-bottom:14px}
+.contact a{display:flex;justify-content:space-between;align-items:center;border:1px solid var(--line);border-radius:12px;padding:12px 14px;text-decoration:none;background:#fff}
+.contact a b{font-size:18px;color:var(--navy)}
+.contact a span{font-size:12px;color:var(--ink2)}
+dl.info{display:grid;grid-template-columns:5.5em minmax(0,1fr);gap:8px 10px;margin:0;font-size:14px}
+dl.info dt{color:var(--ink2)}
+dl.info dd{margin:0}
+.foot{padding:20px 16px;text-align:center;font-size:12px;color:var(--ink3)}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="bar">
+    <a class="shop" href="index.html">エアコンクリーニングイチロー<small>横浜・川崎</small></a>
+    <a class="tel" href="tel:08066775431">☎ 電話する</a>
+  </header>
+
+  <section class="top">
+    <span class="kicker">横浜・川崎のエアコンクリーニング</span>
+    <h1>汚れの落ち方が、<br><em>ちがう。</em></h1>
+    <p class="lead">写真の店長が、ご自宅に伺います。</p>
+    <div class="ba" id="heroBa">
+      <img src="images/ac-after.svg" alt="クリーニングしたあとのエアコン（写真は差し替え予定）" width="800" height="1000">
+      <img class="b" src="images/ac-before.svg" alt="クリーニングする前のエアコン（写真は差し替え予定）" width="800" height="1000">
+      <span class="lb l">BEFORE</span><span class="lb r">AFTER</span>
+      <span class="knob"></span>
+      <input type="range" min="0" max="100" value="50" aria-label="洗う前と後を比べる">
+    </div>
+    <div class="ba-cap"><span>← 指でずらして比べられます</span><span>エアコンクリーニング</span></div>
+    <div class="stats">
+      <div><b>★4.91</b>ユアマイスター評価<br>口コミ156件</div>
+      <div><b>毎日</b>9:00〜21:00<br>定休日なし</div>
+      <div><b>横浜・川崎</b>対応エリア<br>（仮）</div>
+    </div>
+  </section>
+
+  <div class="quick">
+    <div class="p"><small>壁掛けエアコン 1台</small><b>¥11,500<small>（税込）</small></b></div>
+    <a class="btn" href="#price">料金を見る</a>
+  </div>
+  <div class="tags"><span>写真の店長が伺います</span><span>ネット予約OK</span><span>電話予約OK</span><span>毎日営業</span></div>
+
+  <section class="sec tint">
+    <h2>作業事例</h2>
+    <div class="cases" role="tablist" id="cases"></div>
+    <div id="caseBox"></div>
+    <p class="muted" style="margin:10px 0 0">写真は差し替え予定のプレースホルダです。実際の作業写真がそろい次第、差し替えます。</p>
+  </section>
+
+  <section class="sec" id="price">
+    <h2>料金</h2>
+    <div class="chips" role="tablist" id="pchips"></div>
+    <div id="plists"></div>
+    <p class="muted" style="margin:12px 0 0">料金はすべて税込・出張費無料（対応エリア内）。押すと、そのメニューで予約に進めます。</p>
+  </section>
+
+  <section class="sec tint">
+    <h2>店長が伺います</h2>
+    <div class="owner">
+      <img src="images/owner.svg" alt="店長の写真（差し替え予定）" width="750" height="1000" loading="lazy">
+      <div><b>店長</b><span>エアコンクリーニングイチロー</span></div>
+    </div>
+    <p style="margin:0;font-size:14px">エアコンクリーニングイチローでは、写真の店長がご自宅に伺います。エアコンの状態を確認しながら、汚れの具合を説明し、丁寧に洗浄します。はじめての方も、まずはお気軽にご相談ください。（この文章は仮のものです）</p>
+  </section>
+
+  <section class="sec">
+    <h2>お客さまの声</h2>
+    <div class="rv-sum"><span class="big">4.91</span><div class="muted"><span class="stars">★★★★★</span><br>ユアマイスター評価 口コミ156件</div></div>
+    <p class="muted" style="margin:0">エアコンクリーニングイチローは、ユアマイスターで評価4.91・口コミ156件をいただいています。個別の口コミの掲載は準備中です。</p>
+  </section>
+
+  <section class="sec tint">
+    <h2>ご依頼の流れ</h2>
+    <ol class="flow">
+      <li><b>ネット予約</b>メニューと希望日を送る</li>
+      <li><b>日程の連絡</b>こちらから連絡して決定</li>
+      <li><b>作業</b>汚れの具合もお見せします</li>
+      <li><b>お支払い</b>現金・カード</li>
+    </ol>
+    <p class="flow-note">お電話でのご依頼も受け付けています。</p>
+  </section>
+
+  <section class="sec">
+    <h2>ご予約の前に</h2>
+    <details class="acc"><summary>お引き受けできない機種・年式</summary><div class="in">
+      <p>製造から9年以上たったエアコンは、損害保険の対象外で部品の製造も終わっているため、保証の対象外になります。エアコンの真下のシールで、メーカー・型式・製造年をご確認ください。</p>
+      <p>次の機種はお断りしています。</p>
+      <ul><li>日立 しろくま君 おそうじ機能付き Xシリーズ</li><li>パナソニック おそうじ機能付き Xシリーズ</li><li>富士通 ノクリア Xシリーズ（サイドファン付き）</li><li>シャープ おそうじ機能付き ネオレストシリーズ</li><li>三菱 霧ヶ峰 FZシリーズ</li></ul>
+    </div></details>
+    <details class="acc"><summary>当日お願いしたいこと</summary><div class="in"><ul>
+      <li>電気・水道をお借りします。</li>
+      <li>カバーを洗う場所として、お風呂かベランダをお借りします。</li>
+      <li>エアコンの下に作業スペースが必要です。家具や荷物は前もって動かしておいてください。</li>
+      <li>高い所のエアコンは足場が必要なので、予約のときにお知らせください。</li>
+      <li>お掃除機能付きエアコンは、必ず事前にお知らせください。</li>
+    </ul></div></details>
+    <details class="acc"><summary>あらかじめご了承いただきたいこと</summary><div class="in"><ul>
+      <li>取り外しや動作確認ができない、異音・故障があるなどの場合は、作業できないことがあります。</li>
+      <li>設備の劣化などで、塗装がはがれる場合があります。</li>
+      <li>変色や染みこんだ汚れは、完全に落とせない場合があります。</li>
+    </ul></div></details>
+  </section>
+
+  <section class="sec tint">
+    <h2>よくある質問</h2>
+    <details class="acc"><summary>当日、料金が増えることは？</summary><div class="in">当日の急な追加料金はありません。お掃除機能付きかどうかや台数など、状況を先にお知らせください。</div></details>
+    <details class="acc"><summary>駐車場がありません</summary><div class="in">近くの有料パーキングを使いますので、その代金のご負担をお願いします。</div></details>
+    <details class="acc"><summary>支払い方法は？</summary><div class="in">現金のほか、各種クレジットカード（Mastercard・VISA・JCB・American Express）が使えます。</div></details>
+    <details class="acc"><summary>作業を見ていてもいいですか？</summary><div class="in">はい。どこが汚れているか、どう洗うかを説明しながら作業します。</div></details>
+    <details class="acc"><summary>載っていない場所も頼めますか？</summary><div class="in">状況をお聞きして、できるかどうか判断し、お見積もりします。お気軽にご相談ください。</div></details>
+    <details class="acc"><summary>キャンセル料は？</summary><div class="in">
+      <table class="cancel">
+        <tr><td>作業日の5日前まで</td><td>無料</td></tr>
+        <tr><td>4〜2日前</td><td>料金の25%</td></tr>
+        <tr><td>前日</td><td>料金の50%</td></tr>
+        <tr><td>当日</td><td>料金の100%</td></tr>
+      </table>
+      <p class="muted" style="margin:8px 0 0">作業日が決まってから48時間以内なら、キャンセル料はかかりません。</p>
+    </div></details>
+  </section>
+
+  <section class="sec">
+    <h2>お店の情報</h2>
+    <div class="contact">
+      <a href="tel:08066775431"><span>お電話（店長に直接つながります）</span><b>080-6677-5431</b></a>
+    </div>
+    <dl class="info">
+      <dt>屋号</dt><dd>エアコンクリーニングイチロー</dd>
+      <dt>所在地</dt><dd>〒234-0051<br>神奈川県横浜市港南区日野4丁目48-5</dd>
+      <dt>受付時間</dt><dd>9:00〜21:00（毎日営業・定休日なし）<br><span class="muted">作業中は電話に出られないことがあります</span></dd>
+      <dt>対応エリア</dt><dd>横浜市・川崎市（仮）</dd>
+    </dl>
+  </section>
+
+  <p class="foot">© エアコンクリーニングイチロー</p>
+
+  <div class="cta">
+    <div class="sum"><small>壁掛けエアコン 1台</small><b>¥11,500</b></div>
+    <a class="btn" href="yoyaku.html">ネットで予約する</a>
+  </div>
+</div>
+
+<aside class="side">
+  <b>お電話でも受付中</b>
+  <span class="muted">店長に直接つながります</span>
+  <a class="num" href="tel:08066775431">080-6677-5431</a>
+  <span class="muted">9:00〜21:00（毎日営業）</span>
+</aside>
+
+<script src="menu.js?v=4"></script>
+<script>
+// before / after を指でずらして比べる
+function slider(box){
+  const r = box.querySelector("input");
+  const set = () => box.style.setProperty("--x", r.value + "%");
+  r.addEventListener("input", set); set();
+}
+slider(document.getElementById("heroBa"));
+
+// 作業事例
+const CASES = [
+  { k: "ac", name: "エアコンクリーニング", w: 800, h: 1000 }
+];
+(() => {
+  const tabs = document.getElementById("cases"), box = document.getElementById("caseBox");
+  const show = c => {
+    tabs.querySelectorAll("button").forEach(b => b.setAttribute("aria-selected", b.dataset.k === c.k));
+    box.innerHTML = '<div class="ba" style="aspect-ratio:' + c.w + '/' + c.h + '">'
+      + '<img src="images/' + c.k + '-after.svg" alt="' + c.name + '（作業後）" loading="lazy">'
+      + '<img class="b" src="images/' + c.k + '-before.svg" alt="' + c.name + '（作業前）" loading="lazy">'
+      + '<span class="lb l">BEFORE</span><span class="lb r">AFTER</span><span class="knob"></span>'
+      + '<input type="range" min="0" max="100" value="50" aria-label="' + c.name + 'の作業前と後を比べる"></div>'
+      + '<div class="ba-cap"><span>← 指でずらして比べられます</span><span>' + c.name + '</span></div>';
+    slider(box.querySelector(".ba"));
+  };
+  CASES.forEach(c => {
+    const b = document.createElement("button");
+    b.type = "button"; b.dataset.k = c.k; b.setAttribute("role", "tab"); b.textContent = c.name;
+    b.addEventListener("click", () => show(c));
+    tabs.appendChild(b);
+  });
+  show(CASES[0]);
+})();
+
+// 料金（カテゴリーボタンで切りかえ）
+(() => {
+  const chips = document.getElementById("pchips"), lists = document.getElementById("plists");
+  Object.entries(MENU).forEach(([cat, c], i) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "chip"; b.setAttribute("role", "tab");
+    b.setAttribute("aria-selected", i === 0); b.dataset.cat = cat; b.textContent = c.name;
+    chips.appendChild(b);
+    const div = document.createElement("div");
+    div.className = "pane"; div.dataset.cat = cat; div.hidden = i > 0;
+    div.innerHTML = c.groups.map(g => '<p class="pgroup">' + g.title + '</p><div class="pgrid">' + g.items.map((it, n) =>
+      '<a href="yoyaku.html?add=' + it.k + '"' + (n === g.items.length - 1 && g.items.length % 2 ? ' class="wide"' : '') + '><span class="n">' + it.name + '</span>'
+      + (it.desc ? '<span class="d">' + it.desc + '</span>' : '')
+      + '<span class="p">' + (it.check ? "ご相談" : (it.add ? "＋" : "") + yen(it.price) + '<small> / ' + it.unit + '</small>') + '</span>'
+      + '<span class="go">このメニューで予約 →</span></a>').join("") + '</div>').join("");
+    lists.appendChild(div);
+  });
+  chips.addEventListener("click", e => {
+    const b = e.target.closest(".chip"); if (!b) return;
+    chips.querySelectorAll(".chip").forEach(x => x.setAttribute("aria-selected", x === b));
+    lists.querySelectorAll(".pane").forEach(p => p.hidden = p.dataset.cat !== b.dataset.cat);
+  });
+})();
+
+</script>
+</body>
+</html>

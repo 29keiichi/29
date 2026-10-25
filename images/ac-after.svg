@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000">
+  <rect width="800" height="1000" fill="#2f9e8f"/>
+  <rect x="90" y="250" width="620" height="210" rx="36" fill="#e8f4f2"/>
+  <rect x="130" y="290" width="540" height="26" rx="13" fill="#b9ddd8"/>
+  <rect x="130" y="340" width="540" height="26" rx="13" fill="#b9ddd8"/>
+  <rect x="130" y="390" width="540" height="26" rx="13" fill="#b9ddd8"/>
+  <path d="M150 640 q60 -50 120 0 q60 50 120 0 q60 -50 120 0 q60 50 120 0" stroke="#bfe8e1" stroke-width="14" fill="none" stroke-linecap="round"/>
+  <path d="M150 720 q60 -50 120 0 q60 50 120 0 q60 -50 120 0 q60 50 120 0" stroke="#8fd4c9" stroke-width="14" fill="none" stroke-linecap="round"/>
+  <text x="400" y="130" text-anchor="middle" font-family="sans-serif" font-size="64" font-weight="bold" fill="#ffffff">AFTER</text>
+  <text x="400" y="880" text-anchor="middle" font-family="sans-serif" font-size="40" fill="#ffffff">写真差し替え予定</text>
+  <text x="400" y="935" text-anchor="middle" font-family="sans-serif" font-size="32" fill="#dff5f1">エアコン（作業後）</text>
+</svg>
