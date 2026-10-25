@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>エアコンクリーニングイチロー｜横浜・川崎のエアコンクリーニング</title>
 <meta name="description" content="横浜・川崎のエアコンクリーニング。写真の店長がご自宅に伺います。壁掛けエアコン1台 11,500円（税込）。毎日9:00〜21:00、ネットで予約できます。">
-<meta property="og:image" content="images/ac-after.svg">
+<meta property="og:image" content="images/IMG_6889.jpeg">
 <meta name="theme-color" content="#13294b">
 <link rel="stylesheet" href="common.css?v=4">
 <style>
@@ -17,7 +17,7 @@
 .top h1 em{font-style:normal;color:#9fe3d9}
 .top .lead{position:relative;font-size:14px;color:#d3dcea;margin:0 0 16px}
 
-.ba{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:4/5;background:#222;user-select:none;touch-action:pan-y;box-shadow:0 18px 40px rgba(0,0,0,.35)}
+.ba{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:4/3;background:#222;user-select:none;touch-action:pan-y;box-shadow:0 18px 40px rgba(0,0,0,.35)}
 .ba img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
 .ba .b{clip-path:inset(0 calc(100% - var(--x,50%)) 0 0)}
 .ba .knob{position:absolute;top:0;bottom:0;left:var(--x,50%);width:3px;margin-left:-1.5px;background:#fff;pointer-events:none}
@@ -48,8 +48,17 @@
 .cases::-webkit-scrollbar{display:none}
 .cases button{flex:none;border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 13px;font-size:13px;font-weight:700;cursor:pointer;color:var(--ink2)}
 .cases button[aria-selected="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
-#caseBox .ba{aspect-ratio:3/4}
+#caseBox .ba{aspect-ratio:16/9}
 .sec .ba-cap{color:var(--ink2)}
+
+/* 洗浄結果の写真 */
+.result{margin:16px 0 0}
+.result img{width:100%;border-radius:16px}
+.result figcaption{font-size:13px;color:var(--ink2);line-height:1.6;margin-top:8px}
+.result figcaption b{color:var(--navy)}
+
+/* お店のロゴ（店舗情報） */
+.shoplogo{width:min(300px,86%);margin:0 auto 16px}
 
 /* 料金 */
 .pgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
@@ -130,13 +139,13 @@ dl.info dd{margin:0}
     <h1>汚れの落ち方が、<br><em>ちがう。</em></h1>
     <p class="lead">写真の店長が、ご自宅に伺います。</p>
     <div class="ba" id="heroBa">
-      <img src="images/ac-after.svg" alt="クリーニングしたあとのエアコン（写真は差し替え予定）" width="800" height="1000">
-      <img class="b" src="images/ac-before.svg" alt="クリーニングする前のエアコン（写真は差し替え予定）" width="800" height="1000">
+      <img src="images/IMG_6889.jpeg" alt="クリーニング後のエアコン内部（シロッコファン）" width="1206" height="678">
+      <img class="b" src="images/IMG_6888.jpeg" alt="クリーニング前のエアコン内部（シロッコファン）" width="1206" height="678">
       <span class="lb l">BEFORE</span><span class="lb r">AFTER</span>
       <span class="knob"></span>
       <input type="range" min="0" max="100" value="50" aria-label="洗う前と後を比べる">
     </div>
-    <div class="ba-cap"><span>← 指でずらして比べられます</span><span>エアコンクリーニング</span></div>
+    <div class="ba-cap"><span>← 指でずらして比べられます</span><span>エアコン内部のシロッコファン</span></div>
     <div class="stats">
       <div><b>★4.91</b>ユアマイスター評価<br>口コミ156件</div>
       <div><b>毎日</b>9:00〜21:00<br>定休日なし</div>
@@ -154,7 +163,10 @@ dl.info dd{margin:0}
     <h2>作業事例</h2>
     <div class="cases" role="tablist" id="cases"></div>
     <div id="caseBox"></div>
-    <p class="muted" style="margin:10px 0 0">写真は差し替え予定のプレースホルダです。実際の作業写真がそろい次第、差し替えます。</p>
+    <figure class="result">
+      <img src="images/IMG_6890.jpeg" alt="エアコン1台の洗浄で出た汚れた水" width="1206" height="905" loading="lazy">
+      <figcaption><b>洗浄結果：</b>エアコン1台から、これだけの汚れが出ました。洗浄に使った水は真っ黒に。エアコン内部にたまったホコリやカビを、高圧洗浄でしっかり洗い流します。</figcaption>
+    </figure>
   </section>
 
   <section class="sec" id="price">
@@ -167,7 +179,7 @@ dl.info dd{margin:0}
   <section class="sec tint">
     <h2>店長が伺います</h2>
     <div class="owner">
-      <img src="images/owner.svg" alt="店長の写真（差し替え予定）" width="750" height="1000" loading="lazy">
+      <img src="images/IMG_6887.jpeg" alt="店長の顔写真" width="900" height="1200" loading="lazy">
       <div><b>店長</b><span>エアコンクリーニングイチロー</span></div>
     </div>
     <p style="margin:0;font-size:14px">エアコンクリーニングイチローでは、写真の店長がご自宅に伺います。エアコンの状態を確認しながら、汚れの具合を説明し、丁寧に洗浄します。はじめての方も、まずはお気軽にご相談ください。（この文章は仮のものです）</p>
@@ -231,6 +243,7 @@ dl.info dd{margin:0}
 
   <section class="sec">
     <h2>お店の情報</h2>
+    <img class="shoplogo" src="images/IMG_6891.jpeg" alt="エアコンクリーニングイチローのロゴ" width="1014" height="331" loading="lazy">
     <div class="contact">
       <a href="tel:08066775431"><span>お電話（店長に直接つながります）</span><b>080-6677-5431</b></a>
     </div>
@@ -269,18 +282,18 @@ slider(document.getElementById("heroBa"));
 
 // 作業事例
 const CASES = [
-  { k: "ac", name: "エアコンクリーニング", w: 800, h: 1000 }
+  { k: "fan", name: "エアコンクリーニング", cap: "エアコン内部のシロッコファン", w: 1206, h: 678 }
 ];
 (() => {
   const tabs = document.getElementById("cases"), box = document.getElementById("caseBox");
   const show = c => {
     tabs.querySelectorAll("button").forEach(b => b.setAttribute("aria-selected", b.dataset.k === c.k));
     box.innerHTML = '<div class="ba" style="aspect-ratio:' + c.w + '/' + c.h + '">'
-      + '<img src="images/' + c.k + '-after.svg" alt="' + c.name + '（作業後）" loading="lazy">'
-      + '<img class="b" src="images/' + c.k + '-before.svg" alt="' + c.name + '（作業前）" loading="lazy">'
+      + '<img src="images/IMG_6889.jpeg" alt="' + c.cap + '（作業後）" loading="lazy">'
+      + '<img class="b" src="images/IMG_6888.jpeg" alt="' + c.cap + '（作業前）" loading="lazy">'
       + '<span class="lb l">BEFORE</span><span class="lb r">AFTER</span><span class="knob"></span>'
-      + '<input type="range" min="0" max="100" value="50" aria-label="' + c.name + 'の作業前と後を比べる"></div>'
-      + '<div class="ba-cap"><span>← 指でずらして比べられます</span><span>' + c.name + '</span></div>';
+      + '<input type="range" min="0" max="100" value="50" aria-label="' + c.cap + 'の作業前と後を比べる"></div>'
+      + '<div class="ba-cap"><span>← 指でずらして比べられます</span><span>' + c.cap + '</span></div>';
     slider(box.querySelector(".ba"));
   };
   CASES.forEach(c => {
