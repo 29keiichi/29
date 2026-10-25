@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GASコード（コピー用）</title>
+<style>body{font-family:sans-serif;margin:16px}button{font-size:18px;padding:14px 20px;width:100%;background:#123a6b;color:#fff;border:0;border-radius:8px}textarea{width:100%;height:50vh;margin-top:12px;font-size:11px}</style>
+</head><body>
+<h1 style="font-size:18px">GASコード コピー用ページ</h1>
+<p>下の青いボタンを押すと、コード全部がコピーされます。そのあと Apps Script の画面で貼り付けてください。</p>
+<button id="b">コードを全部コピーする</button>
+<textarea id="t" readonly>/**
+ * エアコンクリーニングイチロー 予約受付
+ * ホームページの予約フォームから届いた内容を、スプレッドシートの
+ * 「予約一覧」と「顧客台帳」に書き込み、お客さまとお店にメールを送ります。
+ */
+const SHOP = { name: &quot;エアコンクリーニングイチロー&quot;, tel: &quot;080-6677-5431&quot; };
+
+const BOOKING_SHEET = &quot;予約一覧&quot;;
+const CUSTOMER_SHEET = &quot;顧客台帳&quot;;
+
+const BOOKING_HEAD = [
+  &quot;受付日時&quot;, &quot;予約番号&quot;, &quot;顧客番号&quot;, &quot;お名前&quot;, &quot;電話番号&quot;, &quot;メールアドレス&quot;,
+  &quot;市町村&quot;, &quot;郵便番号&quot;, &quot;ご住所&quot;, &quot;住居タイプ&quot;, &quot;駐車場&quot;,
+  &quot;第1希望日&quot;, &quot;第1希望時間&quot;, &quot;第2希望日&quot;, &quot;第2希望時間&quot;, &quot;第3希望日&quot;, &quot;第3希望時間&quot;,
+  &quot;エアコンの内容&quot;, &quot;水回り・おそうじの内容&quot;, &quot;エアコン小計&quot;, &quot;水回り小計&quot;, &quot;合計金額&quot;,
+  &quot;壁掛け台数&quot;, &quot;天井埋込台数&quot;, &quot;メーカー・型式・製造年&quot;, &quot;ご要望・備考&quot;,
+  &quot;状態&quot;, &quot;作業確定日時&quot;, &quot;お店のメモ&quot;
+];
+const CUSTOMER_HEAD = [
+  &quot;顧客番号&quot;, &quot;お名前&quot;, &quot;電話番号&quot;, &quot;メールアドレス&quot;, &quot;市町村&quot;, &quot;郵便番号&quot;, &quot;ご住所&quot;,
+  &quot;住居タイプ&quot;, &quot;駐車場&quot;, &quot;初回予約日&quot;, &quot;最終予約日&quot;, &quot;予約回数&quot;, &quot;累計金額&quot;, &quot;最終予約番号&quot;, &quot;お店のメモ&quot;
+];
+
+function doPost(e) {
+  const lock = LockService.getScriptLock();
+  lock.waitLock(20000);
+  try {
+    const d = JSON.parse(e.postData.contents);
+    const ss = SpreadsheetApp.openById(&quot;1riqCOmaPJYhp4CJzDyqL04iGNQVquX9DVzJdmmnfTxU&quot;);
+    if (ss.getSpreadsheetTimeZone() !== &quot;Asia/Tokyo&quot;) ss.setSpreadsheetTimeZone(&quot;Asia/Tokyo&quot;);
+    const bs = sheet_(ss, BOOKING_SHEET, BOOKING_HEAD);
+    const cs = sheet_(ss, CUSTOMER_SHEET, CUSTOMER_HEAD);
+    const now = new Date();
+    const id = bookingId_(bs, now);
+    const total = Number(d.total) || 0;
+    const customerId = upsertCustomer_(cs, d, now, id, total);
+
+    bs.appendRow([
+      now, id, customerId, d.name, &quot;&#x27;&quot; + (d.phone || &quot;&quot;), d.email,
+      d.city, &quot;&#x27;&quot; + (d.zip || &quot;&quot;), d.address, d.housing, d.parking,
+      d.date1, d.time1, d.date2, d.time2, d.date3, d.time3,
+      d.aircon_items || &quot;&quot;, d.house_items || &quot;&quot;,
+      Number(d.aircon_total) || 0, Number(d.house_total) || 0, total,
+      Number(d.wall_units) || 0, Number(d.ceiling_units) || 0, d.model || &quot;&quot;, d.note || &quot;&quot;,
+      &quot;未確認&quot;, &quot;&quot;, &quot;&quot;
+    ]);
+
+    mailCustomer_(d, id);
+    mailShop_(d, id, customerId, ss.getUrl());
+    return json_({ ok: true, id: id, customer: customerId });
+  } catch (err) {
+    return json_({ ok: false, error: String(err &amp;&amp; err.message || err) });
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+function doGet() {
+  return json_({ ok: true, message: SHOP.name + &quot; 予約受付は動いています&quot; });
+}
+
+/** 予約番号：R + 年月日 + その日の何件目（例 R261023-1） */
+function bookingId_(bs, now) {
+  const day = Utilities.formatDate(now, &quot;Asia/Tokyo&quot;, &quot;yyMMdd&quot;);
+  const prefix = &quot;R&quot; + day + &quot;-&quot;;
+  const last = bs.getLastRow();
+  let n = 0;
+  if (last &gt; 1) {
+    bs.getRange(2, 2, last - 1, 1).getValues().forEach(r =&gt; {
+      const v = String(r[0]);
+      if (v.indexOf(prefix) === 0) n = Math.max(n, Number(v.slice(prefix.length)) || 0);
+    });
+  }
+  return prefix + (n + 1);
+}
+
+/** 電話番号が同じなら同じお客さま。いなければ新しい顧客番号（C0001〜）をつける */
+function upsertCustomer_(cs, d, now, bookingId, total) {
+  const phone = normPhone_(d.phone);
+  const last = cs.getLastRow();
+  const rows = last &gt; 1 ? cs.getRange(2, 1, last - 1, CUSTOMER_HEAD.length).getValues() : [];
+  for (let i = 0; i &lt; rows.length; i++) {
+    if (normPhone_(rows[i][2]) === phone &amp;&amp; phone) {
+      const r = rows[i];
+      const rowNo = i + 2;
+      cs.getRange(rowNo, 2, 1, 8).setValues([[d.name, &quot;&#x27;&quot; + d.phone, d.email, d.city, &quot;&#x27;&quot; + (d.zip || &quot;&quot;), d.address, d.housing, d.parking]]);
+      cs.getRange(rowNo, 11, 1, 4).setValues([[now, (Number(r[11]) || 0) + 1, (Number(r[12]) || 0) + total, bookingId]]);
+      return r[0];
+    }
+  }
+  let max = 0;
+  rows.forEach(r =&gt; { max = Math.max(max, Number(String(r[0]).replace(/\D/g, &quot;&quot;)) || 0); });
+  const cid = &quot;C&quot; + (&quot;000&quot; + (max + 1)).slice(-4);
+  cs.appendRow([cid, d.name, &quot;&#x27;&quot; + d.phone, d.email, d.city, &quot;&#x27;&quot; + (d.zip || &quot;&quot;), d.address, d.housing, d.parking, now, now, 1, total, bookingId, &quot;&quot;]);
+  return cid;
+}
+
+function normPhone_(p) {
+  return String(p || &quot;&quot;).replace(/[０-９]/g, c =&gt; String.fromCharCode(c.charCodeAt(0) - 0xFEE0)).replace(/\D/g, &quot;&quot;);
+}
+
+function summary_(d, id) {
+  const yen = n =&gt; Number(n || 0).toLocaleString(&quot;ja-JP&quot;) + &quot;円&quot;;
+  return [
+    &quot;予約番号：&quot; + id,
+    &quot;お名前：&quot; + d.name + &quot; 様&quot;,
+    &quot;電話番号：&quot; + d.phone,
+    &quot;ご住所：&quot; + (d.zip ? &quot;〒&quot; + d.zip + &quot; &quot; : &quot;&quot;) + d.city + &quot; &quot; + d.address,
+    &quot;住居タイプ：&quot; + d.housing + &quot;／駐車場：&quot; + d.parking,
+    &quot;&quot;,
+    &quot;【ご希望日】&quot;,
+    &quot;第1希望：&quot; + d.date1 + &quot; &quot; + d.time1,
+    &quot;第2希望：&quot; + d.date2 + &quot; &quot; + d.time2,
+    &quot;第3希望：&quot; + d.date3 + &quot; &quot; + d.time3,
+    &quot;&quot;,
+    &quot;【内容】&quot;,
+    d.aircon_items ? &quot;エアコン：&quot; + d.aircon_items + &quot;（小計 &quot; + yen(d.aircon_total) + &quot;）&quot; : &quot;&quot;,
+    d.house_items ? &quot;水回り・おそうじ：&quot; + d.house_items + &quot;（小計 &quot; + yen(d.house_total) + &quot;）&quot; : &quot;&quot;,
+    &quot;合計（税込）：&quot; + yen(d.total),
+    d.model ? &quot;メーカー・型式・製造年：&quot; + d.model : &quot;&quot;,
+    d.note ? &quot;ご要望・備考：&quot; + d.note : &quot;&quot;
+  ].filter(s =&gt; s !== &quot;&quot;).join(&quot;\n&quot;);
+}
+
+function mailCustomer_(d, id) {
+  if (!d.email) return;
+  const body = d.name + &quot; 様\n\n&quot; + SHOP.name + &quot;です。ご予約ありがとうございます。\n&quot;
+    + &quot;次の内容で受け付けました。作業日は、こちらからご連絡して決めさせていただきます。\n\n&quot;
+    + summary_(d, id) + &quot;\n\n&quot;
+    + &quot;※金額は目安です。台数・機種・汚れの具合で変わる場合は、作業の前に必ずご説明します。\n&quot;
+    + &quot;※このメールに心当たりがない場合は、お手数ですがお知らせください。\n\n&quot;
+    + SHOP.name + &quot;\n☎ &quot; + SHOP.tel + &quot;（作業中は出られないことがあります）&quot;;
+  MailApp.sendEmail({ to: d.email, subject: &quot;【&quot; + SHOP.name + &quot;】ご予約を受け付けました（&quot; + id + &quot;）&quot;, body: body, name: SHOP.name });
+}
+
+function mailShop_(d, id, customerId, url) {
+  const me = Session.getEffectiveUser().getEmail();
+  if (!me) return;
+  const body = &quot;ホームページから新しい予約が入りました。\n\n顧客番号：&quot; + customerId + &quot;\n&quot; + summary_(d, id)
+    + &quot;\nメール：&quot; + d.email + &quot;\n\n顧客台帳：&quot; + url;
+  MailApp.sendEmail({ to: me, subject: &quot;【新しい予約】&quot; + d.name + &quot; 様（&quot; + id + &quot;）&quot;, body: body, name: SHOP.name + &quot; 予約受付&quot; });
+}
+
+function sheet_(ss, name, head) {
+  let sh = ss.getSheetByName(name);
+  if (!sh) sh = ss.insertSheet(name);
+  if (sh.getLastRow() === 0) {
+    sh.appendRow(head);
+    sh.getRange(1, 1, 1, head.length).setFontWeight(&quot;bold&quot;).setBackground(&quot;#123a6b&quot;).setFontColor(&quot;#ffffff&quot;);
+    sh.setFrozenRows(1);
+  }
+  return sh;
+}
+
+function json_(o) {
+  return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON);
+}
+
+/** 最初に1回だけ動かす：シートの準備と、メール・表計算を使う許可 */
+function setup() {
+  const ss = SpreadsheetApp.openById(&quot;1riqCOmaPJYhp4CJzDyqL04iGNQVquX9DVzJdmmnfTxU&quot;);
+  sheet_(ss, BOOKING_SHEET, BOOKING_HEAD);
+  sheet_(ss, CUSTOMER_SHEET, CUSTOMER_HEAD);
+  const first = ss.getSheetByName(&quot;シート1&quot;) || ss.getSheetByName(&quot;Sheet1&quot;);
+  if (first &amp;&amp; ss.getSheets().length &gt; 2) ss.deleteSheet(first);
+  MailApp.getRemainingDailyQuota();
+  Logger.log(&quot;準備できました&quot;);
+}
+</textarea>
+<script>
+document.getElementById('b').addEventListener('click', async () => {
+  const t = document.getElementById('t');
+  try { await navigator.clipboard.writeText(t.value); alert('コピーできました。Apps Scriptの画面で貼り付けてください。'); }
+  catch(e){ t.select(); document.execCommand('copy'); alert('コピーできました。Apps Scriptの画面で貼り付けてください。'); }
+});
+</script>
+</body></html>
