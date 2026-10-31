@@ -61,8 +61,43 @@ function doPost(e) {
   }
 }
 
-function doGet() {
+function doGet(e) {
+  if (e && e.parameter && e.parameter.mode === "slots") return json_(slots_());
   return json_({ ok: true, message: SHOP.name + " 予約受付は動いています" });
+}
+
+/** 1日の時間枠（予約フォームの時間帯と対応） */
+const SLOT_DEFS = [
+  { start: 9, end: 12 }, { start: 12, end: 15 }, { start: 15, end: 18 }, { start: 18, end: 21 }
+];
+
+/**
+ * 空き枠を返す（今日の3日後〜60日後）。
+ * 店長のGoogleカレンダーで、時間の入った予定が重なる枠は closed（true）にする。
+ * 2時間以上の予定が同じ日に2つ以上ある日は「1日2件まで」のルールで丸ごと閉じる。
+ * 外に出すのは「閉まっているかどうか」だけで、予定の名前や内容は出さない。
+ */
+function slots_() {
+  const DAY = 86400000, HOUR = 3600000;
+  const jst0 = Math.floor((Date.now() + 9 * HOUR) / DAY) * DAY - 9 * HOUR; // 今日0時（日本時間）
+  const cal = CalendarApp.getDefaultCalendar();
+  const events = cal.getEvents(new Date(jst0 + 3 * DAY), new Date(jst0 + 61 * DAY))
+    .filter(ev => !ev.isAllDayEvent());
+  const days = {};
+  for (let i = 3; i <= 60; i++) {
+    const d0 = jst0 + i * DAY;
+    const dayEvs = events.filter(ev => ev.getStartTime().getTime() < d0 + DAY && ev.getEndTime().getTime() > d0);
+    const longCount = dayEvs.filter(ev => {
+      const s = ev.getStartTime().getTime(), en = ev.getEndTime().getTime();
+      return en - s >= 2 * HOUR && s < d0 + 21 * HOUR && en > d0 + 9 * HOUR;
+    }).length;
+    days[Utilities.formatDate(new Date(d0), "Asia/Tokyo", "yyyy-MM-dd")] = SLOT_DEFS.map(sl => {
+      if (longCount >= 2) return true;
+      const ss = d0 + sl.start * HOUR, se = d0 + sl.end * HOUR;
+      return dayEvs.some(ev => ev.getStartTime().getTime() < se && ev.getEndTime().getTime() > ss);
+    });
+  }
+  return { ok: true, days: days };
 }
 
 /** 予約番号：R + 年月日 + その日の何件目（例 R261023-1） */
@@ -205,6 +240,7 @@ function setup() {
   const first = ss.getSheetByName("シート1") || ss.getSheetByName("Sheet1");
   if (first && ss.getSheets().length > 2) ss.deleteSheet(first);
   photoFolder_();
+  CalendarApp.getDefaultCalendar();
   MailApp.getRemainingDailyQuota();
   Logger.log("準備できました");
 }
