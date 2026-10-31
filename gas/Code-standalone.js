@@ -4,6 +4,7 @@
  * 「予約一覧」と「顧客台帳」に書き込み、お客さまとお店にメールを送ります。
  */
 const SHOP = { name: "エアコンクリーニングイチロー", tel: "080-6677-5431" };
+const SHOP_NOTIFY = "23ichirocleaning@gmail.com"; // 新しい予約の通知を送る店側アドレス
 
 const BOOKING_SHEET = "予約一覧";
 const CUSTOMER_SHEET = "顧客台帳";
@@ -175,8 +176,7 @@ function mailCustomer_(d, id) {
 }
 
 function mailShop_(d, id, customerId, url, photos) {
-  const me = Session.getEffectiveUser().getEmail();
-  if (!me) return;
+  const me = SHOP_NOTIFY;
   let body = "ホームページから新しい予約が入りました。\n\n顧客番号：" + customerId + "\n" + summary_(d, id)
     + "\nメール：" + d.email + "\n\n顧客台帳：" + url;
   if (photos && (photos.unit || photos.remote)) {

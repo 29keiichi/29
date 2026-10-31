@@ -5,7 +5,7 @@
 <style>body{font-family:sans-serif;margin:16px}button{font-size:18px;padding:14px 20px;width:100%;background:#123a6b;color:#fff;border:0;border-radius:8px}textarea{width:100%;height:50vh;margin-top:12px;font-size:11px}</style>
 </head><body>
 <h1 style="font-size:18px">GASコード コピー用ページ（写真＋空き枠対応版）</h1>
-<p>予約フォームの「写真アップロード」と「カレンダー連動の空き枠」に対応した新しいコードです。下の青いボタンを押すと、コード全部がコピーされます。そのあと Apps Script の画面で貼り付けてください。</p>
+<p>予約フォームの「写真アップロード」と「カレンダー連動の空き枠」に対応した新しいコードです。新しい予約の通知は 23ichirocleaning@gmail.com に届きます。下の青いボタンを押すと、コード全部がコピーされます。そのあと Apps Script の画面で貼り付けてください。</p>
 <button id="b">コードを全部コピーする</button>
 <textarea id="t" readonly>/**
  * エアコンクリーニングイチロー 予約受付
@@ -13,6 +13,7 @@
  * 「予約一覧」と「顧客台帳」に書き込み、お客さまとお店にメールを送ります。
  */
 const SHOP = { name: &quot;エアコンクリーニングイチロー&quot;, tel: &quot;080-6677-5431&quot; };
+const SHOP_NOTIFY = &quot;23ichirocleaning@gmail.com&quot;; // 新しい予約の通知を送る店側アドレス
 
 const BOOKING_SHEET = &quot;予約一覧&quot;;
 const CUSTOMER_SHEET = &quot;顧客台帳&quot;;
@@ -184,8 +185,7 @@ function mailCustomer_(d, id) {
 }
 
 function mailShop_(d, id, customerId, url, photos) {
-  const me = Session.getEffectiveUser().getEmail();
-  if (!me) return;
+  const me = SHOP_NOTIFY;
   let body = &quot;ホームページから新しい予約が入りました。\n\n顧客番号：&quot; + customerId + &quot;\n&quot; + summary_(d, id)
     + &quot;\nメール：&quot; + d.email + &quot;\n\n顧客台帳：&quot; + url;
   if (photos &amp;&amp; (photos.unit || photos.remote)) {
