@@ -14,7 +14,7 @@ const BOOKING_HEAD = [
   "第1希望日", "第1希望時間", "第2希望日", "第2希望時間", "第3希望日", "第3希望時間",
   "エアコンの内容", "水回り・おそうじの内容", "エアコン小計", "水回り小計", "合計金額",
   "壁掛け台数", "天井埋込台数", "メーカー・型式・製造年", "ご要望・備考",
-  "状態", "作業確定日時", "お店のメモ"
+  "状態", "作業確定日時", "お店のメモ", "写真（エアコン全体）", "写真（リモコン）"
 ];
 const CUSTOMER_HEAD = [
   "顧客番号", "お名前", "電話番号", "メールアドレス", "市町村", "郵便番号", "ご住所",
@@ -42,11 +42,17 @@ function doPost(e) {
       d.aircon_items || "", d.house_items || "",
       Number(d.aircon_total) || 0, Number(d.house_total) || 0, total,
       Number(d.wall_units) || 0, Number(d.ceiling_units) || 0, d.model || "", d.note || "",
-      "未確認", "", ""
+      "未確認", "", "", "", ""
     ]);
 
+    // 写真が届いていたらドライブに保存し、台帳にリンクを書く（失敗しても予約は受け付ける）
+    const photos = savePhotos_(d, id);
+    if (photos.unit || photos.remote) {
+      bs.getRange(bs.getLastRow(), BOOKING_HEAD.length - 1, 1, 2).setValues([[photos.unit, photos.remote]]);
+    }
+
     mailCustomer_(d, id);
-    mailShop_(d, id, customerId, ss.getUrl());
+    mailShop_(d, id, customerId, ss.getUrl(), photos);
     return json_({ ok: true, id: id, customer: customerId });
   } catch (err) {
     return json_({ ok: false, error: String(err && err.message || err) });
@@ -133,12 +139,41 @@ function mailCustomer_(d, id) {
   MailApp.sendEmail({ to: d.email, subject: "【" + SHOP.name + "】ご予約を受け付けました（" + id + "）", body: body, name: SHOP.name });
 }
 
-function mailShop_(d, id, customerId, url) {
+function mailShop_(d, id, customerId, url, photos) {
   const me = Session.getEffectiveUser().getEmail();
   if (!me) return;
-  const body = "ホームページから新しい予約が入りました。\n\n顧客番号：" + customerId + "\n" + summary_(d, id)
+  let body = "ホームページから新しい予約が入りました。\n\n顧客番号：" + customerId + "\n" + summary_(d, id)
     + "\nメール：" + d.email + "\n\n顧客台帳：" + url;
+  if (photos && (photos.unit || photos.remote)) {
+    body += "\n\n【お客さまの写真】"
+      + (photos.unit ? "\nエアコン全体：" + photos.unit : "")
+      + (photos.remote ? "\nリモコン：" + photos.remote : "");
+  }
   MailApp.sendEmail({ to: me, subject: "【新しい予約】" + d.name + " 様（" + id + "）", body: body, name: SHOP.name + " 予約受付" });
+}
+
+/** 写真が届いていたら Google ドライブに保存してリンクを返す */
+function savePhotos_(d, id) {
+  const out = { unit: "", remote: "" };
+  try {
+    let folder = null;
+    [["photo_unit", "全体", "unit"], ["photo_remote", "リモコン", "remote"]].forEach(([key, label, slot]) => {
+      if (!d[key]) return;
+      if (!folder) folder = photoFolder_();
+      const blob = Utilities.newBlob(Utilities.base64Decode(d[key]), "image/jpeg", id + "_" + label + ".jpg");
+      const file = folder.createFile(blob);
+      file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+      out[slot] = file.getUrl();
+    });
+  } catch (err) {
+    // 写真の保存に失敗しても予約そのものは止めない
+  }
+  return out;
+}
+
+function photoFolder_() {
+  const it = DriveApp.getFoldersByName("イチロー予約写真");
+  return it.hasNext() ? it.next() : DriveApp.createFolder("イチロー予約写真");
 }
 
 function sheet_(ss, name, head) {
@@ -148,6 +183,12 @@ function sheet_(ss, name, head) {
     sh.appendRow(head);
     sh.getRange(1, 1, 1, head.length).setFontWeight("bold").setBackground("#123a6b").setFontColor("#ffffff");
     sh.setFrozenRows(1);
+  } else {
+    // あとから増えた見出しは、既存の表にも足す
+    const cur = sh.getRange(1, 1, 1, head.length).getValues()[0];
+    head.forEach((h, i) => {
+      if (!cur[i]) sh.getRange(1, i + 1).setValue(h).setFontWeight("bold").setBackground("#123a6b").setFontColor("#ffffff");
+    });
   }
   return sh;
 }
@@ -163,6 +204,7 @@ function setup() {
   sheet_(ss, CUSTOMER_SHEET, CUSTOMER_HEAD);
   const first = ss.getSheetByName("シート1") || ss.getSheetByName("Sheet1");
   if (first && ss.getSheets().length > 2) ss.deleteSheet(first);
+  photoFolder_();
   MailApp.getRemainingDailyQuota();
   Logger.log("準備できました");
 }
