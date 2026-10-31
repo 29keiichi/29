@@ -27,7 +27,8 @@ button{font-family:inherit}
 .cta .sum{flex:none;line-height:1.2}
 .cta .sum small{display:block;font-size:11px;color:var(--ink2)}
 .cta .sum b{font-size:20px;color:var(--navy)}
-.cta .btn{flex:1}
+.cta .btn{flex:1;white-space:nowrap}
+.cta .btn.tel{flex:none;width:auto}
 .btn{display:flex;align-items:center;justify-content:center;gap:6px;background:var(--ac);color:#fff;border:0;border-radius:12px;padding:14px 16px;font-size:16px;font-weight:800;text-decoration:none;cursor:pointer;width:100%;box-shadow:0 4px 0 #0a5d57}
 .btn:active{transform:translateY(2px);box-shadow:0 2px 0 #0a5d57}
 .btn:disabled{background:#8cc9c2;box-shadow:none;cursor:default}
