@@ -85,7 +85,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--ac2);border-colo
     <!-- 1. メニュー -->
     <section class="step" data-step="1">
       <h1>メニューを選ぶ</h1>
-      <p class="lead">＋を押すと料金がその場で変わります。エアコンとその他は、上のボタンで切りかえられます。</p>
+      <p class="lead">＋を押すと料金がその場で変わります。エアコンとその他は、上のボタンで切りかえられます。冬期限定で、エアコン2台目以降は1台につき1,000円引きが、合計に自動で反映されます。</p>
       <div class="chips" role="tablist" id="chips"></div>
       <div id="panes"></div>
     </section>
@@ -214,7 +214,9 @@ function calc(){
     out[it.cat].total += amount;
     out[it.cat].lines.push({ name: it.name, qty: q, unit: it.unit || "", amount, consult: !!it.check });
   });
-  const text = cat => out[cat].lines.map(l => l.consult ? l.name + "（ご相談）" : l.name + " " + l.qty + l.unit + " " + yen(l.amount)).join("、");
+  const units = st.wall || 0, discount = Math.max(0, units - 1) * 1000;
+  if (discount) { out.aircon.total -= discount; out.aircon.lines.push({ name: "複数台割引（2台目以降）", qty: units - 1, unit: "台", amount: -discount }); }
+  const text = cat => out[cat].lines.map(l => l.consult ? l.name + "（ご相談）" : l.name + " " + l.qty + l.unit + " " + (l.amount < 0 ? "−" + yen(-l.amount) : yen(l.amount))).join("、");
   return { ...out, total: out.aircon.total + out.house.total, airconText: text("aircon"), houseText: text("house") };
 }
 function render(){
@@ -291,7 +293,7 @@ function buildConfirm(){
   const l = (a, b) => '<div class="l"><span>' + a + '</span><span>' + esc(b) + '</span></div>';
   const goto = n => '<a data-go="' + n + '">変更</a>';
   let h = '<div class="conf"><h2>メニュー' + goto(1) + '</h2>';
-  ["aircon", "house"].forEach(cat => c[cat].lines.forEach(x => { h += l(x.name + (x.consult ? "" : " ×" + x.qty), x.consult ? "ご相談" : yen(x.amount)); }));
+  ["aircon", "house"].forEach(cat => c[cat].lines.forEach(x => { h += l(x.name + (x.consult ? "" : " ×" + x.qty), x.consult ? "ご相談" : (x.amount < 0 ? "−" + yen(-x.amount) : yen(x.amount))); }));
   h += '</div><div class="total-big"><span>合計（税込）</span><b>' + yen(c.total) + '</b></div>';
   h += '<div class="conf"><h2>希望日' + goto(2) + '</h2>' + l("第1希望", d(1)) + l("第2希望", d(2)) + l("第3希望", d(3)) + '</div>';
   h += '<div class="conf"><h2>お客さま' + goto(3) + '</h2>' + l("お名前", fm.name.value) + l("電話番号", fm.phone.value) + l("メール", fm.email.value)
