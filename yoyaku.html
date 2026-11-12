@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LD1ZVN14HT"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-LD1ZVN14HT');
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>ご予約｜エアコンクリーニングイチロー</title>
@@ -41,6 +49,7 @@
 .f .req{background:var(--ng);color:#fff;border-radius:4px;font-size:10px;padding:1px 5px;margin-left:6px;vertical-align:2px}
 .f small{font-weight:400;color:var(--ink2);font-size:12px;margin-left:4px}
 input[type=text],input[type=tel],input[type=email],input[type=date],select,textarea{width:100%;padding:12px;border:1px solid #d6d6d6;border-radius:10px;font-size:16px;background:#fff;color:var(--ink);font-family:inherit;-webkit-appearance:none;appearance:none}
+input[type=file]{width:100%;padding:11px 12px;border:1px dashed #c4c4c4;border-radius:10px;font-size:14px;background:#fff;color:var(--ink);font-family:inherit}
 select{background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23999' stroke-width='2'/%3E%3C/svg%3E") no-repeat right 14px center}
 textarea{min-height:90px}
 input:focus,select:focus,textarea:focus{outline:2px solid var(--ac2);border-color:transparent}
@@ -48,6 +57,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--ac2);border-colo
 .opts{display:grid;gap:8px}
 .opts.g2{grid-template-columns:1fr 1fr}
 .opts label{display:flex;align-items:center;gap:8px;border:1px solid #d6d6d6;border-radius:10px;padding:11px 12px;font-size:14px;cursor:pointer;background:#fff}
+.opts label.off{opacity:.45;cursor:default}
 .opts label:has(input:checked){border-color:var(--ac);background:var(--ac-soft);font-weight:700}
 .opts input{accent-color:var(--ac);width:18px;height:18px;margin:0;flex:none}
 .cand{border:1px solid var(--line);border-radius:12px;padding:4px 14px 14px;margin-bottom:12px}
@@ -94,6 +104,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--ac2);border-colo
     <section class="step" data-step="2" hidden>
       <h1>希望日を選ぶ</h1>
       <p class="lead">3日以上先の日にちで、候補を3つ選んでください。なるべく日にちをずらしていただけると決まりやすくなります。</p>
+      <p class="note" id="slotsNote"></p>
       <div id="dates"></div>
     </section>
 
@@ -111,7 +122,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--ac2);border-colo
       <select id="i_city" name="city">
         <option value="">選んでください</option>
         <option>横浜市鶴見区</option><option>横浜市神奈川区</option><option>横浜市西区</option><option>横浜市中区</option><option>横浜市南区</option><option>横浜市港南区</option><option>横浜市保土ケ谷区</option><option>横浜市旭区</option><option>横浜市磯子区</option><option>横浜市金沢区</option><option>横浜市港北区</option><option>横浜市緑区</option><option>横浜市青葉区</option><option>横浜市都筑区</option><option>横浜市戸塚区</option><option>横浜市栄区</option><option>横浜市泉区</option><option>横浜市瀬谷区</option><option>川崎市川崎区</option><option>川崎市幸区</option><option>川崎市中原区</option><option>川崎市高津区</option><option>川崎市宮前区</option><option>川崎市多摩区</option><option>川崎市麻生区</option>
-        <option>横須賀市</option><option>藤沢市</option><option>鎌倉市</option><option>逗子市</option><option>三浦郡葉山町</option><option>その他（ご相談）</option>
+        <option>横須賀市</option><option>三浦市</option><option>藤沢市</option><option>茅ヶ崎市</option><option>鎌倉市</option><option>逗子市</option><option>三浦郡葉山町</option><option>平塚市（出張費込み）</option><option>相模原市（出張費込み）</option><option>大和市（出張費込み）</option><option>綾瀬市（出張費込み）</option><option>海老名市（出張費込み）</option><option>座間市（出張費込み）</option><option>厚木市（出張費込み）</option><option>伊勢原市（出張費込み）</option><option>寒川町（出張費込み）</option><option>東京都内（出張費込み）</option><option>その他（ご相談）</option>
       </select>
       <label class="f" for="i_zip">郵便番号</label>
       <input id="i_zip" type="text" name="zip" inputmode="numeric" autocomplete="postal-code" placeholder="例：234-0051">
@@ -132,6 +143,13 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--ac2);border-colo
       <label class="f" for="i_model">エアコンのメーカー・型式・製造年<small>わかる範囲で</small></label>
       <input id="i_model" type="text" name="model" placeholder="例：ダイキン AN22XXX 2019年製">
       <p class="note">エアコンの真下のシールに書いてあります。</p>
+      <label class="f" for="i_photo1">エアコンの写真<small>あれば</small></label>
+      <p class="note" style="margin:0 0 6px">エアコン全体が写った写真があると、機種の確認がスムーズです。</p>
+      <input id="i_photo1" type="file" accept="image/*">
+      <p class="note" id="ph1"></p>
+      <label class="f" for="i_photo2">リモコンの写真<small>あれば</small></label>
+      <input id="i_photo2" type="file" accept="image/*">
+      <p class="note" id="ph2"></p>
       <label class="f" for="i_note">ご要望・ご質問</label>
       <textarea id="i_note" name="note" placeholder="設置場所、気になること（におい・効きが悪い など）"></textarea>
     </section>
@@ -250,25 +268,56 @@ $("#panes").addEventListener("change", e => { const i = e.target.closest("input[
 })();
 render();
 
-// 希望日（3日以上先・日本時間）
+// 希望日（3日以上先・60日先まで・日本時間）
 (() => {
   const now = new Date(Date.now() + 9 * 3600 * 1000);
-  now.setUTCDate(now.getUTCDate() + 3);
-  const min = now.toISOString().slice(0, 10);
+  const dMin = new Date(now); dMin.setUTCDate(dMin.getUTCDate() + 3);
+  const dMax = new Date(now); dMax.setUTCDate(dMax.getUTCDate() + 60);
+  const min = dMin.toISOString().slice(0, 10), max = dMax.toISOString().slice(0, 10);
   $("#dates").innerHTML = ["第1希望", "第2希望", "第3希望"].map((n, i) => '<div class="cand">'
     + '<label class="f" for="d' + (i + 1) + '">' + n + '<span class="req">必須</span></label>'
-    + '<input id="d' + (i + 1) + '" type="date" name="date' + (i + 1) + '" min="' + min + '">'
+    + '<input id="d' + (i + 1) + '" type="date" name="date' + (i + 1) + '" min="' + min + '" max="' + max + '">'
+    + '<p class="note" id="full' + (i + 1) + '" hidden>この日は空き枠がありません。別の日を選んでください。</p>'
     + '<span class="f">時間帯</span><div class="opts g2">'
     + TIMES.map((t, j) => '<label><input type="radio" name="time' + (i + 1) + '" value="' + t + '"' + (j === 0 ? " checked" : "") + '>' + t + '</label>').join("")
     + '</div></div>').join("");
 })();
+
+// 空き枠：店長のカレンダーを読んで、埋まっている時間帯を選べなくする（読めなければ今まで通り）
+let SLOTMAP = null;
+const BANDS = ["9時〜12時", "12時〜15時", "15時〜18時", "18時〜21時"];
+function applySlots(i){
+  if (!SLOTMAP) return;
+  const fm = $("#f"), closed = SLOTMAP[fm["date" + i].value] || null;
+  const radios = fm.querySelectorAll("input[name=time" + i + "]");
+  radios.forEach(r => {
+    const bi = BANDS.indexOf(r.value);
+    const off = closed ? (bi >= 0 ? !!closed[bi] : closed.every(Boolean)) : false;
+    r.disabled = off;
+    r.closest("label").classList.toggle("off", off);
+  });
+  $("#full" + i).hidden = !(closed && closed.every(Boolean));
+  const checked = fm.querySelector("input[name=time" + i + "]:checked");
+  if (checked && checked.disabled) {
+    const first = [...radios].find(r => !r.disabled);
+    if (first) first.checked = true;
+  }
+}
+[1, 2, 3].forEach(i => $("#f")["date" + i].addEventListener("change", () => applySlots(i)));
+fetch(GAS_URL + "?mode=slots").then(r => r.json()).then(j => {
+  if (j && j.ok && j.days) {
+    SLOTMAP = j.days;
+    [1, 2, 3].forEach(applySlots);
+    $("#slotsNote").textContent = "グレーの時間帯は、すでに予定が入っているため選べません。";
+  }
+}).catch(() => {});
 
 // 入力チェック（スマホは吹き出しが出ないことがあるので、自分でチェックする）
 function check(n){
   const fm = $("#f"), c = calc();
   const need = {
     1: () => (c.aircon.lines.length || c.house.lines.length) ? "" : ["メニューを1つ以上選んでください。", null],
-    2: () => { for (const i of [1, 2, 3]) { const el = fm["date" + i]; if (!el.value) return ["第" + i + "希望の日にちを選んでください。", el]; if (el.value < el.min) return ["第" + i + "希望は " + el.min.replace(/-/g, "/") + " 以降を選んでください。", el]; } return ""; },
+    2: () => { for (const i of [1, 2, 3]) { const el = fm["date" + i]; if (!el.value) return ["第" + i + "希望の日にちを選んでください。", el]; if (el.value < el.min) return ["第" + i + "希望は " + el.min.replace(/-/g, "/") + " 以降を選んでください。", el]; if (el.max && el.value > el.max) return ["第" + i + "希望は " + el.max.replace(/-/g, "/") + " までで選んでください。", el]; if (SLOTMAP) { const closed = SLOTMAP[el.value]; if (closed) { const t = fm.querySelector("input[name=time" + i + "]:checked").value; const bi = BANDS.indexOf(t); if (bi >= 0 && closed[bi]) return ["第" + i + "希望の時間帯は、すでに予定が入っています。", el]; if (bi < 0 && closed.every(Boolean)) return ["第" + i + "希望の日は空きがありません。", el]; } } } return ""; },
     3: () => {
       const L = { name: "お名前", phone: "電話番号", email: "メールアドレス", city: "市区町村", address: "ご住所" };
       for (const k in L) { const el = fm[k]; if (!el.value.trim()) return [L[k] + "を入れてください。", el]; }
@@ -288,6 +337,28 @@ function check(n){
 }
 
 const esc = s => String(s || "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+// 写真：選んだら名前を出し、送るときに小さく（最大1600px・JPEG）して付けます
+[["#i_photo1", "#ph1"], ["#i_photo2", "#ph2"]].forEach(([i, s]) => $(i).addEventListener("change", e => { $(s).textContent = e.target.files[0] ? "✓ " + e.target.files[0].name : ""; }));
+const photosChosen = () => [$("#i_photo1").files.length ? "エアコン全体" : "", $("#i_photo2").files.length ? "リモコン" : ""].filter(Boolean).join("・");
+function photoData(input){
+  return new Promise(res => {
+    const f = input && input.files && input.files[0];
+    if (!f) return res(null);
+    const url = URL.createObjectURL(f);
+    const img = new Image();
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      const sc = Math.min(1, 1600 / Math.max(img.width, img.height));
+      const cv = document.createElement("canvas");
+      cv.width = Math.round(img.width * sc); cv.height = Math.round(img.height * sc);
+      cv.getContext("2d").drawImage(img, 0, 0, cv.width, cv.height);
+      try { res(cv.toDataURL("image/jpeg", 0.82).split(",")[1]); } catch (_) { res(null); }
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); res(null); };
+    img.src = url;
+  });
+}
 function buildConfirm(){
   const fm = $("#f"), c = calc(), d = n => fm["date" + n].value.replace(/-/g, "/") + " " + fm.querySelector("input[name=time" + n + "]:checked").value;
   const l = (a, b) => '<div class="l"><span>' + a + '</span><span>' + esc(b) + '</span></div>';
@@ -299,7 +370,7 @@ function buildConfirm(){
   h += '<div class="conf"><h2>お客さま' + goto(3) + '</h2>' + l("お名前", fm.name.value) + l("電話番号", fm.phone.value) + l("メール", fm.email.value)
     + l("ご住所", (fm.zip.value ? "〒" + fm.zip.value + " " : "") + fm.city.value + " " + fm.address.value)
     + l("住まい", fm.querySelector("input[name=housing]:checked").value) + l("駐車場", fm.querySelector("input[name=parking]:checked").value)
-    + (fm.model.value ? l("エアコン", fm.model.value) : "") + (fm.note.value ? l("ご要望", fm.note.value) : "") + '</div>';
+    + (fm.model.value ? l("エアコン", fm.model.value) : "") + (photosChosen() ? l("写真", photosChosen()) : "") + (fm.note.value ? l("ご要望", fm.note.value) : "") + '</div>';
   $("#confirm").innerHTML = h;
 }
 $("#confirm").addEventListener("click", e => { const a = e.target.closest("[data-go]"); if (a) go(+a.dataset.go); });
@@ -328,6 +399,9 @@ $("#next").addEventListener("click", async () => {
     submitted_at: new Date().toISOString(), page: location.href
   });
   btn.disabled = true; btn.textContent = "送信中…";
+  const pu = await photoData($("#i_photo1")), pr = await photoData($("#i_photo2"));
+  if (pu) data.photo_unit = pu;
+  if (pr) data.photo_remote = pr;
   try {
     const r = await fetch(GAS_URL, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(data) });
     // スマホでは返事が読めないことがあるため、読めないときは受け付け済みとして扱う
