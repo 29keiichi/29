@@ -4,7 +4,7 @@ const SHOP = { name: "エアコンクリーニングイチロー", tel: "080-667
 const MENU = {
   aircon: { name: "エアコン", groups: [
     { title: "エアコン本体", items: [
-      { k: "wall",    name: "壁掛けエアコン",   price: 10000, unit: "台", desc: "通常タイプ。カバー・フィルター・本体内部の高圧洗浄" },
+      { k: "wall",    name: "壁掛けエアコン",   price: 10000, unit: "台", desc: "通常タイプ。カバー・フィルター・本体内部の高圧洗浄。洗剤は、赤ちゃんの衣類や食器にも使われる酸素系の成分。界面活性剤を使わないエコ洗剤で洗います" },
       { k: "auto",    name: "お掃除機能付き",   price: 5000, unit: "台", max: "wall", add: true, desc: "壁掛けとの合計で1台 15,000円になります" }
     ]},
     { title: "壁掛けに追加するもの", items: [
