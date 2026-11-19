@@ -95,7 +95,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--ac2);border-colo
     <!-- 1. メニュー -->
     <section class="step" data-step="1">
       <h1>メニューを選ぶ</h1>
-      <p class="lead">＋を押すと料金がその場で変わります。エアコンとその他は、上のボタンで切りかえられます。冬期限定で、エアコン2台目以降は1台につき1,000円引きが、合計に自動で反映されます。</p>
+      <p class="lead">＋を押すと料金がその場で変わります。エアコンとその他は、上のボタンで切りかえられます。冬期限定で、エアコン2台目以降は1台につき1,600円引きが、合計に自動で反映されます。</p>
       <div class="chips" role="tablist" id="chips"></div>
       <div id="panes"></div>
     </section>
@@ -232,7 +232,7 @@ function calc(){
     out[it.cat].total += amount;
     out[it.cat].lines.push({ name: it.name, qty: q, unit: it.unit || "", amount, consult: !!it.check });
   });
-  const units = st.wall || 0, discount = Math.max(0, units - 1) * 1000;
+  const units = st.wall || 0, discount = Math.max(0, units - 1) * 1600;
   if (discount) { out.aircon.total -= discount; out.aircon.lines.push({ name: "複数台割引（2台目以降）", qty: units - 1, unit: "台", amount: -discount }); }
   const text = cat => out[cat].lines.map(l => l.consult ? l.name + "（ご相談）" : l.name + " " + l.qty + l.unit + " " + (l.amount < 0 ? "−" + yen(-l.amount) : yen(l.amount))).join("、");
   return { ...out, total: out.aircon.total + out.house.total, airconText: text("aircon"), houseText: text("house") };
