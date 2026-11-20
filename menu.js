@@ -9,12 +9,12 @@ const MENU = {
     ]},
     { title: "壁掛けに追加するもの", items: [
       { k: "outdoor", name: "室外機クリーニング", price: 4000, unit: "台", max: "wall", add: true },
-      { k: "deodor",  name: "消臭除菌施工",     price: 3000, unit: "台", max: "wall", add: true, desc: "天然100%の消臭液「きえーる」（環境大善）を使用。洗浄後に原液をミスト噴霧し、ニオイの元を分解します。エアコンへの使用方法はメーカーに確認済みです" },
+      { k: "deodor",  name: "消臭施工",     price: 3000, unit: "台", max: "wall", add: true, desc: "天然100%の消臭液「きえーる」（環境大善）を使用。洗浄後に原液をミスト噴霧し、ニオイの元を分解します。エアコンへの使用方法はメーカーに確認済みです" },
       { k: "drain",   name: "ドレンホース詰まり除去", price: 2000, unit: "台", max: "wall", add: true }
     ]},
     { title: "お得なセット", items: [
-      { k: "matome",  name: "おまとめセット",   price: 5000, unit: "台", max: "wall", add: true, desc: "室外機＋消臭除菌施工（別々だと7,000円）" },
-      { k: "set3",    name: "3点セット",       price: 7000, unit: "台", max: "wall", add: true, desc: "室外機＋消臭除菌施工＋ドレンホース詰まり除去（別々だと9,000円）" }
+      { k: "matome",  name: "おまとめセット",   price: 5000, unit: "台", max: "wall", add: true, desc: "室外機＋消臭施工（別々だと7,000円）" },
+      { k: "set3",    name: "3点セット",       price: 7000, unit: "台", max: "wall", add: true, desc: "室外機＋消臭施工＋ドレンホース詰まり除去（別々だと9,000円）" }
     ]}
   ]},
   house: { name: "その他", groups: [
