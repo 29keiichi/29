@@ -1,25 +1,25 @@
 /* スマホの画面をそのまま、パソコンでも真ん中に出す作り */
 :root{
-  --ac:#0f7c74;--ac2:#14a394;--ac-soft:#e7f5f3;--navy:#13294b;--gold:#b8892d;
-  --ink:#1f2933;--ink2:#5f6b76;--ink3:#9aa5af;--line:#e3e8ec;--bg:#e8eef2;--card:#fff;
+  --ac:#0f7c74;--ac2:#14a394;--ac-soft:#e7f5f3;--navy:#13294b;--sky:#a9d9f2;--gold:#b8892d;
+  --ink:#1f2933;--ink2:#5f6b76;--ink3:#9aa5af;--line:#e3e8ec;--bg:#eef6fb;--card:#fff;
   --star:#f2b01e;--ok:#1f8a5b;--ng:#c8402b;
   --app:480px;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;color:var(--ink);font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic UI","Meiryo",system-ui,sans-serif;font-size:15px;line-height:1.75;
-  background:var(--bg) repeating-linear-gradient(135deg,transparent 0 18px,rgba(19,41,75,.035) 18px 19px)}
+  background:var(--bg) repeating-linear-gradient(135deg,transparent 0 18px,rgba(110,192,228,.14) 18px 19px)}
 img{max-width:100%;height:auto;display:block}
 a{color:inherit}
 button{font-family:inherit}
 
-.app{max-width:var(--app);margin:0 auto;background:#fff;min-height:100vh;box-shadow:0 0 50px rgba(19,41,75,.12);padding-bottom:84px;position:relative;overflow-x:hidden}
+.app{max-width:var(--app);margin:0 auto;background:#fff;min-height:100vh;box-shadow:0 0 50px rgba(90,150,190,.16);padding-bottom:84px;position:relative;overflow-x:hidden}
 
 /* 上の帯 */
-.bar{position:sticky;top:0;z-index:20;background:var(--navy);color:#fff;height:54px;display:flex;align-items:center;gap:10px;padding:0 14px}
-.bar .back{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;text-decoration:none;font-size:22px;color:#fff;flex:none}
+.bar{position:sticky;top:0;z-index:20;background:var(--sky);color:var(--navy);height:54px;display:flex;align-items:center;gap:10px;padding:0 14px}
+.bar .back{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;text-decoration:none;font-size:22px;color:var(--navy);flex:none}
 .bar .shop{font-weight:800;font-size:16px;letter-spacing:.06em;text-decoration:none;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.bar .shop small{font-weight:600;color:#9fe3d9;font-size:11px;margin-left:6px;letter-spacing:0}
+.bar .shop small{font-weight:600;color:rgba(19,41,75,.65);font-size:11px;margin-left:6px;letter-spacing:0}
 .bar .tel{flex:none;display:flex;align-items:center;gap:4px;text-decoration:none;font-size:12px;font-weight:700;color:var(--navy);background:#fff;border-radius:8px;padding:6px 10px}
 
 /* 下の帯（予約ボタン） */
@@ -53,8 +53,11 @@ button{font-family:inherit}
 /* パソコンで見たときだけ、横に出るお知らせ */
 .side{display:none}
 @media(min-width:960px){
-  .side{display:block;position:fixed;top:50%;transform:translateY(-50%);right:calc(50% + var(--app)/2 + 32px);width:220px;background:var(--navy);color:#fff;border-radius:16px;padding:20px;font-size:13px;text-align:center}
+  .side{display:block;position:fixed;top:50%;transform:translateY(-50%);right:calc(50% + var(--app)/2 + 32px);width:220px;background:var(--sky);color:var(--navy);border-radius:16px;padding:20px;font-size:13px;text-align:center}
   .side b{display:block;font-size:15px;margin-bottom:4px}
-  .side .num{display:block;font-size:20px;font-weight:800;color:#9fe3d9;text-decoration:none;margin:8px 0 0}
-  .side .muted{color:#b9c6d6}
+  .side .num{display:block;font-size:20px;font-weight:800;color:var(--navy);text-decoration:none;margin:8px 0 0}
+  .side .muted{color:rgba(19,41,75,.7)}
 }
+
+/* 対応できない機種の写真一覧 */
+.ngphoto{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:10px;margin:12px 0;background:#fff}
