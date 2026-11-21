@@ -1,6 +1,6 @@
 /* スマホの画面をそのまま、パソコンでも真ん中に出す作り */
 :root{
-  --ac:#0f7c74;--ac2:#14a394;--ac-soft:#e7f5f3;--navy:#13294b;--sky:#a9d9f2;--gold:#b8892d;
+  --ac:#13294b;--ac2:#2456a6;--ac-soft:#e9eff8;--navy:#13294b;--sky:#a9d9f2;--gold:#b8892d;
   --ink:#1f2933;--ink2:#5f6b76;--ink3:#9aa5af;--line:#e3e8ec;--bg:#eef6fb;--card:#fff;
   --star:#f2b01e;--ok:#1f8a5b;--ng:#c8402b;
   --app:480px;
@@ -36,9 +36,9 @@ button{font-family:inherit}
 .cta .sum b{font-size:20px;color:var(--navy)}
 .cta .btn{flex:1;white-space:nowrap}
 .cta .btn.tel{flex:none;width:auto}
-.btn{display:flex;align-items:center;justify-content:center;gap:6px;background:var(--ac);color:#fff;border:0;border-radius:12px;padding:14px 16px;font-size:16px;font-weight:800;text-decoration:none;cursor:pointer;width:100%;box-shadow:0 4px 0 #0a5d57}
-.btn:active{transform:translateY(2px);box-shadow:0 2px 0 #0a5d57}
-.btn:disabled{background:#8cc9c2;box-shadow:none;cursor:default}
+.btn{display:flex;align-items:center;justify-content:center;gap:6px;background:var(--ac);color:#fff;border:0;border-radius:12px;padding:14px 16px;font-size:16px;font-weight:800;text-decoration:none;cursor:pointer;width:100%;box-shadow:0 4px 0 #0a1a33}
+.btn:active{transform:translateY(2px);box-shadow:0 2px 0 #0a1a33}
+.btn:disabled{background:#93a7c4;box-shadow:none;cursor:default}
 .btn.line{background:#fff;color:var(--ac);border:1.5px solid var(--ac);box-shadow:none}
 
 /* 区切りのあるかたまり */
