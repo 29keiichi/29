@@ -25,18 +25,18 @@ gtag('config', 'G-LD1ZVN14HT');
 .head::before{content:"";position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.55),transparent 70%);top:-140px;right:-110px}
 .head img{position:relative;width:96px;height:96px;border-radius:50%;object-fit:cover;object-position:center 30%;border:3px solid #fff;margin:0 auto 10px}
 .head h1{position:relative;font-size:22px;margin:0;letter-spacing:.08em}
-.head p{position:relative;margin:4px 0 0;font-size:13px;color:rgba(19,41,75,.75)}
+.head p{position:relative;margin:4px 0 0;font-size:13px;color:rgba(47,78,121,.75)}
 .badges{position:relative;display:flex;justify-content:center;flex-wrap:wrap;gap:6px;margin-top:12px}
 .badges span{font-size:11px;font-weight:700;background:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.75);border-radius:999px;padding:2px 10px}
 .list{padding:0 16px;margin-top:-34px;position:relative;display:grid;gap:10px}
-.lk{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;text-decoration:none;box-shadow:0 3px 0 rgba(19,41,75,.10),0 6px 14px rgba(19,41,75,.08)}
-.lk:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(19,41,75,.10)}
+.lk{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;text-decoration:none;box-shadow:0 3px 0 rgba(47,78,121,.10),0 6px 14px rgba(47,78,121,.08)}
+.lk:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(47,78,121,.10)}
 .lk .ic{flex:none;width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:22px;background:var(--ac-soft)}
 .lk .t{flex:1;min-width:0}
 .lk b{display:block;font-size:15px;color:var(--navy)}
 .lk span{display:block;font-size:12px;color:var(--ink2)}
 .lk::after{content:"›";font-size:22px;color:var(--ink3)}
-.lk.main{background:linear-gradient(180deg,#2c4d80,#13294b 55%,#0d1f3a);border-color:var(--ac)}
+.lk.main{background:linear-gradient(180deg,#52729e,#2f4e79 55%,#1e3a5c);border-color:var(--ac)}
 .lk.main .ic{background:rgba(255,255,255,.18)}
 .lk.main b,.lk.main span,.lk.main::after{color:#fff}
 .lk.staff{background:#f5f8fa;box-shadow:none;border-style:dashed}
@@ -93,7 +93,7 @@ gtag('config', 'G-LD1ZVN14HT');
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
 const url = location.origin + location.pathname;
-try { new QRCode(document.getElementById("qr"), { text: url, width: 160, height: 160, colorDark: "#13294b", colorLight: "#ffffff" }); } catch (_) {}
+try { new QRCode(document.getElementById("qr"), { text: url, width: 160, height: 160, colorDark: "#2f4e79", colorLight: "#ffffff" }); } catch (_) {}
 document.getElementById("copy").addEventListener("click", async e => {
   try { await navigator.clipboard.writeText(url); e.target.textContent = "コピーしました"; }
   catch (_) { prompt("このリンクをコピーしてください", url); }
