@@ -13,7 +13,7 @@ img{max-width:100%;height:auto;display:block}
 a{color:inherit}
 button{font-family:inherit}
 
-.app{max-width:var(--app);margin:0 auto;background:#fff;min-height:100vh;box-shadow:0 0 50px rgba(90,150,190,.16);padding-bottom:84px;position:relative;overflow-x:hidden}
+.app{max-width:var(--app);margin:0 auto;background:var(--bg);min-height:100vh;box-shadow:0 0 50px rgba(90,150,190,.16);padding-bottom:84px;position:relative;overflow-x:hidden}
 
 /* 上の帯 */
 .bar{position:sticky;top:0;z-index:20;background:var(--sky);color:var(--navy);height:54px;display:flex;align-items:center;gap:10px;padding:0 14px}
@@ -35,11 +35,11 @@ button{font-family:inherit}
 .btn.line{background:#fff;color:var(--ac);border:1.5px solid var(--ac);box-shadow:none}
 
 /* 区切りのあるかたまり */
-.sec{padding:26px 16px}
+.sec{padding:26px 16px;background:var(--bg)}
 .sec + .sec{border-top:1px solid var(--line)}
-.sec.tint{background:#f5f8fa}
-.sec h2{font-size:18px;margin:0 0 14px;font-weight:800;display:flex;align-items:center;gap:8px;color:var(--navy)}
-.sec h2::before{content:"";width:4px;height:18px;border-radius:2px;background:var(--ac)}
+.sec.tint{background:var(--bg)}
+.sec h2{font-size:19px;margin:0 0 14px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:8px;color:#fff;background:var(--sky);border-radius:12px;padding:11px 14px;text-align:center}
+.sec h2::before{content:none}
 .muted{color:var(--ink2);font-size:13px}
 .stars{color:var(--star);letter-spacing:1px}
 
