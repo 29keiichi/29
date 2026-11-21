@@ -73,6 +73,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--ac2);border-colo
 .total-big{display:flex;justify-content:space-between;align-items:baseline;padding:12px 2px}
 .total-big b{font-size:26px}
 .note{font-size:12px;color:var(--ink2);margin:6px 0 0}
+.fullnote{background:#fff1ee;color:#c0392b;border-radius:10px;padding:9px 12px;font-size:13px;font-weight:700}
 .msg{display:none;padding:12px 14px;border-radius:10px;margin-top:12px;font-size:14px;background:#fff1ee;color:var(--ng)}
 .msg.show{display:block}
 
@@ -278,7 +279,7 @@ render();
   $("#dates").innerHTML = ["第1希望", "第2希望", "第3希望"].map((n, i) => '<div class="cand">'
     + '<label class="f" for="d' + (i + 1) + '">' + n + '<span class="req">必須</span></label>'
     + '<input id="d' + (i + 1) + '" type="date" name="date' + (i + 1) + '" min="' + min + '" max="' + max + '">'
-    + '<p class="note" id="full' + (i + 1) + '" hidden>この日は空き枠がありません。別の日を選んでください。</p>'
+    + '<p class="note fullnote" id="full' + (i + 1) + '" hidden>この日はすでにスケジュールが埋まっております。別の日を選んでください。</p>'
     + '<span class="f">時間帯</span><div class="opts g2">'
     + TIMES.map((t, j) => '<label><input type="radio" name="time' + (i + 1) + '" value="' + t + '"' + (j === 0 ? " checked" : "") + '>' + t + '</label>').join("")
     + '</div></div>').join("");
@@ -318,7 +319,7 @@ function check(n){
   const fm = $("#f"), c = calc();
   const need = {
     1: () => (c.aircon.lines.length || c.house.lines.length) ? "" : ["メニューを1つ以上選んでください。", null],
-    2: () => { for (const i of [1, 2, 3]) { const el = fm["date" + i]; if (!el.value) return ["第" + i + "希望の日にちを選んでください。", el]; if (el.value < el.min) return ["第" + i + "希望は " + el.min.replace(/-/g, "/") + " 以降を選んでください。", el]; if (el.max && el.value > el.max) return ["第" + i + "希望は " + el.max.replace(/-/g, "/") + " までで選んでください。", el]; if (SLOTMAP) { const closed = SLOTMAP[el.value]; if (closed) { const t = fm.querySelector("input[name=time" + i + "]:checked").value; const bi = BANDS.indexOf(t); if (bi >= 0 && closed[bi]) return ["第" + i + "希望の時間帯は、すでに予定が入っています。", el]; if (bi < 0 && closed.every(Boolean)) return ["第" + i + "希望の日は空きがありません。", el]; } } } return ""; },
+    2: () => { for (const i of [1, 2, 3]) { const el = fm["date" + i]; if (!el.value) return ["第" + i + "希望の日にちを選んでください。", el]; if (el.value < el.min) return ["第" + i + "希望は " + el.min.replace(/-/g, "/") + " 以降を選んでください。", el]; if (el.max && el.value > el.max) return ["第" + i + "希望は " + el.max.replace(/-/g, "/") + " までで選んでください。", el]; if (SLOTMAP) { const closed = SLOTMAP[el.value]; if (closed) { const t = fm.querySelector("input[name=time" + i + "]:checked").value; const bi = BANDS.indexOf(t); if (bi >= 0 && closed[bi]) return ["第" + i + "希望の時間帯は、すでに予定が入っています。", el]; if (bi < 0 && closed.every(Boolean)) return ["第" + i + "希望の日は、すでにスケジュールが埋まっております。", el]; } } } return ""; },
     3: () => {
       const L = { name: "お名前", phone: "電話番号", email: "メールアドレス", city: "市区町村", address: "ご住所" };
       for (const k in L) { const el = fm[k]; if (!el.value.trim()) return [L[k] + "を入れてください。", el]; }
