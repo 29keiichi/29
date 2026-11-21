@@ -103,7 +103,7 @@ const KANTO_RED = &quot;#ea4335&quot;;
  */
 function slots_() {
   const cache = CacheService.getScriptCache();
-  const hit = cache.get(&quot;slots_v4&quot;);
+  const hit = cache.get(&quot;slots_v5&quot;);
   if (hit) return JSON.parse(hit);
   const DAY = 86400000, HOUR = 3600000;
   const jst0 = Math.floor((Date.now() + 9 * HOUR) / DAY) * DAY - 9 * HOUR; // 今日0時（日本時間）
@@ -135,6 +135,7 @@ function slots_() {
     }).length;
     const sc = sheetClosed[key] || null;
     days[key] = SLOT_DEFS.map((sl, bi) =&gt; {
+      if (bi === 3) return true; // ④18〜21時は常時クローズ（2026-11-21本人指示）
       if (allDayClose[key]) return true;
       if (longCount &gt;= 2) return true;
       if (sc &amp;&amp; sc[bi]) return true;
@@ -143,7 +144,7 @@ function slots_() {
     });
   }
   const out = { ok: true, days: days };
-  cache.put(&quot;slots_v4&quot;, JSON.stringify(out), 600);
+  cache.put(&quot;slots_v5&quot;, JSON.stringify(out), 600);
   return out;
 }
 
