@@ -89,7 +89,7 @@ const KANTO_FRAME_COLS = [9, 10, 11, 13];
 const KANTO_RED = &quot;#ea4335&quot;;
 
 /**
- * 空き枠を返す（今日の3日後〜60日後）。判定は2つを組み合わせる。
+ * 空き枠を返す（締切は前日21時〜60日後）。判定は2つを組み合わせる。
  * 1. Googleカレンダー：時間の入った予定が重なる枠は閉じる。
  *    仕事（バナナ色）の2時間以上の予定が同じ日に2つ以上ある日は
  *    「1日2件まで」で丸ごと閉じる（数えるのは仕事の予定だけ）。
@@ -103,27 +103,28 @@ const KANTO_RED = &quot;#ea4335&quot;;
  */
 function slots_() {
   const cache = CacheService.getScriptCache();
-  const hit = cache.get(&quot;slots_v3&quot;);
+  const hit = cache.get(&quot;slots_v4&quot;);
   if (hit) return JSON.parse(hit);
   const DAY = 86400000, HOUR = 3600000;
   const jst0 = Math.floor((Date.now() + 9 * HOUR) / DAY) * DAY - 9 * HOUR; // 今日0時（日本時間）
+  const START = Number(Utilities.formatDate(new Date(), &quot;Asia/Tokyo&quot;, &quot;H&quot;)) &gt;= 21 ? 2 : 1; // 締切は前日21時
   const cal = CalendarApp.getCalendarById(&quot;29keiichi@gmail.com&quot;);
-  const all = cal.getEvents(new Date(jst0 + 3 * DAY), new Date(jst0 + 61 * DAY));
+  const all = cal.getEvents(new Date(jst0 + START * DAY), new Date(jst0 + 61 * DAY));
   const events = all.filter(ev =&gt; !ev.isAllDayEvent());
   // 終日予定が入っている日（複数日にまたがる場合は全日）
   const allDayClose = {};
   all.filter(ev =&gt; ev.isAllDayEvent())
     .forEach(ev =&gt; {
-      let t = Math.max(ev.getStartTime().getTime(), jst0 + 3 * DAY);
+      let t = Math.max(ev.getStartTime().getTime(), jst0 + START * DAY);
       const end = Math.min(ev.getEndTime().getTime(), jst0 + 61 * DAY);
       while (t &lt; end) {
         allDayClose[Utilities.formatDate(new Date(t), &quot;Asia/Tokyo&quot;, &quot;yyyy-MM-dd&quot;)] = true;
         t += DAY;
       }
     });
-  const sheetClosed = kantoClosedMap_(jst0);
+  const sheetClosed = kantoClosedMap_(jst0, START);
   const days = {};
-  for (let i = 3; i &lt;= 60; i++) {
+  for (let i = START; i &lt;= 60; i++) {
     const d0 = jst0 + i * DAY;
     const key = Utilities.formatDate(new Date(d0), &quot;Asia/Tokyo&quot;, &quot;yyyy-MM-dd&quot;);
     const dayEvs = events.filter(ev =&gt; ev.getStartTime().getTime() &lt; d0 + DAY &amp;&amp; ev.getEndTime().getTime() &gt; d0);
@@ -142,7 +143,7 @@ function slots_() {
     });
   }
   const out = { ok: true, days: days };
-  cache.put(&quot;slots_v3&quot;, JSON.stringify(out), 600);
+  cache.put(&quot;slots_v4&quot;, JSON.stringify(out), 600);
   return out;
 }
 
@@ -151,13 +152,13 @@ function slots_() {
  * 「閉じるかどうか」の表を返す。月のタブ（例「26年11月」）をまたいで読む。
  * 読めないタブ・青木の行がない日は表に入れない（＝シート側では閉じない）。
  */
-function kantoClosedMap_(jst0) {
+function kantoClosedMap_(jst0, startDay) {
   const DAY = 86400000;
   const map = {};
   let ss;
   try { ss = SpreadsheetApp.openById(KANTO_SS_ID); } catch (e) { return map; }
   const months = {};
-  for (let i = 3; i &lt;= 60; i++) {
+  for (let i = startDay; i &lt;= 60; i++) {
     months[Utilities.formatDate(new Date(jst0 + i * DAY), &quot;Asia/Tokyo&quot;, &quot;yy年M月&quot;)] = true;
   }
   Object.keys(months).forEach(name =&gt; {
