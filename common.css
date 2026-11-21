@@ -13,16 +13,20 @@ img{max-width:100%;height:auto;display:block}
 a{color:inherit}
 button{font-family:inherit}
 
-.app{max-width:var(--app);margin:0 auto;background:var(--bg);min-height:100vh;box-shadow:0 0 50px rgba(90,150,190,.16);padding-bottom:84px;position:relative;overflow-x:hidden}
+.app{max-width:var(--app);margin:0 auto;background:var(--bg);min-height:100vh;box-shadow:0 0 50px rgba(90,150,190,.16);padding-top:calc(54px + env(safe-area-inset-top));padding-bottom:84px;position:relative;overflow-x:hidden}
 
 /* 上の帯 */
-.bar{position:sticky;top:0;z-index:20;background:var(--sky);color:var(--navy);height:54px;display:flex;align-items:center;gap:10px;padding:0 14px}
+.bar{position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:var(--app);z-index:20;background:var(--sky);color:var(--navy);height:calc(54px + env(safe-area-inset-top));display:flex;align-items:center;gap:10px;padding:env(safe-area-inset-top) 14px 0}
 .bar .back{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;text-decoration:none;font-size:22px;color:var(--navy);flex:none}
 .bar .shop{font-weight:800;font-size:16px;letter-spacing:.06em;text-decoration:none;color:#fff;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .bar .shop small{font-weight:600;color:rgba(19,41,75,.65);font-size:11px;margin-left:6px;letter-spacing:0}
 .bar .tel{flex:none;display:flex;align-items:center;gap:4px;text-decoration:none;font-size:12px;font-weight:700;color:var(--navy);background:#fff;border-radius:8px;padding:6px 10px}
 
-.reload-wrap{text-align:center;padding:18px 16px 6px}
+.reload-wrap{text-align:center;padding:18px 16px 52px}
+.ptr{display:none;position:fixed;top:calc(62px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);z-index:40;background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 16px;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--navy);box-shadow:0 4px 16px rgba(19,41,75,.18)}
+.ptr.show{display:flex}
+.ptr i{width:16px;height:16px;border-radius:50%;border:3px solid rgba(19,41,75,.2);border-top-color:var(--navy);animation:ptrspin .7s linear infinite}
+@keyframes ptrspin{to{transform:rotate(360deg)}}
 .reload-btn{background:#fff;border:1px solid var(--line);color:var(--navy);font-weight:700;font-size:13px;border-radius:999px;padding:8px 18px;cursor:pointer}
 
 /* 下の帯（予約ボタン） */
