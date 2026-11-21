@@ -18,7 +18,7 @@ button{font-family:inherit}
 /* 上の帯 */
 .bar{position:sticky;top:0;z-index:20;background:var(--sky);color:var(--navy);height:54px;display:flex;align-items:center;gap:10px;padding:0 14px}
 .bar .back{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;text-decoration:none;font-size:22px;color:var(--navy);flex:none}
-.bar .shop{font-weight:800;font-size:16px;letter-spacing:.06em;text-decoration:none;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar .shop{font-weight:800;font-size:16px;letter-spacing:.06em;text-decoration:none;color:#fff;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .bar .shop small{font-weight:600;color:rgba(19,41,75,.65);font-size:11px;margin-left:6px;letter-spacing:0}
 .bar .tel{flex:none;display:flex;align-items:center;gap:4px;text-decoration:none;font-size:12px;font-weight:700;color:var(--navy);background:#fff;border-radius:8px;padding:6px 10px}
 
