@@ -37,9 +37,9 @@ button{font-family:inherit}
 .cta .sum b{font-size:20px;color:var(--navy)}
 .cta .btn{flex:1;white-space:nowrap}
 .cta .btn.tel{flex:none;width:auto}
-.btn{display:flex;align-items:center;justify-content:center;gap:6px;background:linear-gradient(180deg,#7ca3c6 0%,var(--ac) 55%,#466a8c 100%);color:#fff;border:0;border-radius:12px;padding:14px 16px;font-size:16px;font-weight:800;text-decoration:none;cursor:pointer;width:100%;box-shadow:0 5px 0 #3d5a78,inset 0 1px 0 rgba(255,255,255,.35),0 8px 16px rgba(85,126,166,.25)}
-.btn:active{transform:translateY(3px);box-shadow:0 2px 0 #3d5a78,inset 0 1px 0 rgba(255,255,255,.35)}
-.btn:disabled{background:#a9bfd4;box-shadow:none;cursor:default}
+.btn{display:flex;align-items:center;justify-content:center;gap:6px;background:linear-gradient(180deg,#527fa9 0%,#35608c 55%,#274a6b 100%);color:#fff;border:0;border-radius:12px;padding:14px 16px;font-size:16px;font-weight:800;text-decoration:none;cursor:pointer;width:100%;box-shadow:0 5px 0 #1e3a54,inset 0 1px 0 rgba(255,255,255,.35),0 8px 16px rgba(53,96,140,.3)}
+.btn:active{transform:translateY(3px);box-shadow:0 2px 0 #1e3a54,inset 0 1px 0 rgba(255,255,255,.35)}
+.btn:disabled{background:#93adc5;box-shadow:none;cursor:default}
 .btn.line{background:linear-gradient(180deg,#ffffff,#edf1f6);color:var(--ac);border:1.5px solid var(--ac);box-shadow:0 3px 0 #b0c4d9,inset 0 1px 0 #fff}
 .btn.line:active{transform:translateY(2px);box-shadow:0 1px 0 #b0c4d9}
 
