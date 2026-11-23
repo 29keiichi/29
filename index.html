@@ -364,7 +364,7 @@ dl.info dd{margin:0}
   <span class="muted">9:00〜21:00（毎日営業）</span>
 </aside>
 
-<script src="menu.js?v=5"></script>
+<script src="menu.js?v=6"></script>
 <script src="callpop.js?v=1"></script>
 <script>
 // before / after を指でずらして比べる
@@ -417,6 +417,7 @@ const CASES = [
       + '<span class="go">このメニューで予約 →</span></a>').join("") + '</div>').join("");
     lists.appendChild(div);
   });
+  if (Object.keys(MENU).length < 2) chips.style.display = "none";
   chips.addEventListener("click", e => {
     const b = e.target.closest(".chip"); if (!b) return;
     chips.querySelectorAll(".chip").forEach(x => x.setAttribute("aria-selected", x === b));

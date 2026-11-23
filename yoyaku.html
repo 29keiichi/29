@@ -100,7 +100,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--ac2);border-colo
     <!-- 1. メニュー -->
     <section class="step" data-step="1">
       <h1>メニューを選ぶ</h1>
-      <p class="lead">＋を押すと料金がその場で変わります。エアコンとその他は、上のボタンで切りかえられます。冬期限定で、エアコン2台目以降は1台につき2,000円引きが、合計に自動で反映されます。</p>
+      <p class="lead">＋を押すと料金がその場で変わります。冬期限定で、エアコン2台目以降は1台につき2,000円引きが、合計に自動で反映されます。</p>
       <div class="chips" role="tablist" id="chips"></div>
       <div id="panes"></div>
     </section>
@@ -193,7 +193,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--ac2);border-colo
   <span class="muted">9:00〜21:00（毎日営業）</span>
 </aside>
 
-<script src="menu.js?v=5"></script>
+<script src="menu.js?v=6"></script>
 <script src="callpop.js?v=1"></script>
 <script>
 // 予約を受け取る Google の仕組み（GAS）の住所
@@ -224,6 +224,7 @@ Object.entries(MENU).forEach(([cat, c], i) => {
     + '</div>').join("")).join("") + '<div class="cat-total"><span>' + c.name + 'の小計</span><span id="p_' + cat + '">¥0</span></div>';
   $("#panes").appendChild(p);
 });
+if (Object.keys(MENU).length < 2) $("#chips").style.display = "none";
 function showCat(cat){
   document.querySelectorAll("#chips .chip").forEach(x => x.setAttribute("aria-selected", x.dataset.cat === cat));
   document.querySelectorAll("#panes .pane").forEach(p => p.hidden = p.dataset.cat !== cat);
@@ -250,7 +251,7 @@ function render(){
     $("#r_" + it.k).classList.toggle("sel", st[it.k] > 0);
   });
   const c = calc();
-  ["aircon", "house"].forEach(cat => { $("#c_" + cat).textContent = yen(c[cat].total); $("#p_" + cat).textContent = yen(c[cat].total); });
+  Object.keys(MENU).forEach(cat => { $("#c_" + cat).textContent = yen(c[cat].total); $("#p_" + cat).textContent = yen(c[cat].total); });
   $("#total").textContent = yen(c.total);
   document.querySelectorAll(".ctr button").forEach(b => {
     const it = ITEMS[b.dataset.k];

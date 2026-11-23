@@ -16,11 +16,6 @@ const MENU = {
       { k: "matome",  name: "おまとめセット",   price: 5000, unit: "台", max: "wall", add: true, desc: "室外機＋消臭施工（別々だと7,000円）" },
       { k: "set3",    name: "3点セット",       price: 7000, unit: "台", max: "wall", add: true, desc: "室外機＋消臭施工＋ドレンホース詰まり除去（別々だと9,000円）" }
     ]}
-  ]},
-  house: { name: "その他", groups: [
-    { title: "ご相談", items: [
-      { k: "other",   name: "その他のクリーニング・ご相談", price: 0, check: true, desc: "料金はご相談のうえお知らせします" }
-    ]}
   ]}
 };
 const yen = n => "¥" + Number(n).toLocaleString("ja-JP");
