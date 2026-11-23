@@ -108,7 +108,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--ac2);border-colo
     <!-- 2. 希望日 -->
     <section class="step" data-step="2" hidden>
       <h1>希望日を選ぶ</h1>
-      <p class="lead">ご希望日の前日21時まで受け付けています。候補を3つ選んでください。なるべく日にちをずらしていただけると決まりやすくなります。</p>
+      <p class="lead">ご希望日の2日前まで受け付けています。前日・当日のご予約は、お電話でご相談ください。候補を3つ選んでください。なるべく日にちをずらしていただけると決まりやすくなります。</p>
       <p class="note" id="slotsNote"></p>
       <div id="dates"></div>
     </section>
@@ -275,10 +275,10 @@ $("#panes").addEventListener("change", e => { const i = e.target.closest("input[
 })();
 render();
 
-// 希望日（前日21時まで受付・60日先まで・日本時間）
+// 希望日（2日前まで受付・60日先まで・日本時間）
 (() => {
   const now = new Date(Date.now() + 9 * 3600 * 1000);
-  const addMin = now.getUTCHours() >= 21 ? 2 : 1;
+  const addMin = 2; // 2日前まで受付（2026-11-23変更）
   const dMin = new Date(now); dMin.setUTCDate(dMin.getUTCDate() + addMin);
   const dMax = new Date(now); dMax.setUTCDate(dMax.getUTCDate() + 60);
   const min = dMin.toISOString().slice(0, 10), max = dMax.toISOString().slice(0, 10);
