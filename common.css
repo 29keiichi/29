@@ -7,11 +7,12 @@
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;color:var(--ink);font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic UI","Meiryo",system-ui,sans-serif;font-size:15px;line-height:1.75;
+body{margin:0;color:var(--ink);font-family:"Noto Sans JP","Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic UI","Meiryo",system-ui,sans-serif;font-size:15px;line-height:1.75;
   background:var(--bg) repeating-linear-gradient(135deg,transparent 0 18px,rgba(110,192,228,.14) 18px 19px)}
 img{max-width:100%;height:auto;display:block}
 a{color:inherit}
 button{font-family:inherit}
+h1,h2,h3,h4,.btn,.p,.sum,.tel b{font-family:"M PLUS Rounded 1c","Noto Sans JP",sans-serif}
 
 .app{max-width:var(--app);margin:0 auto;background:var(--bg);min-height:100vh;box-shadow:0 0 50px rgba(90,150,190,.16);padding-top:calc(54px + env(safe-area-inset-top));padding-bottom:84px;position:relative;overflow-x:hidden}
 
