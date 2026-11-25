@@ -44,6 +44,12 @@ gtag('config', 'G-LD1ZVN14HT');
 .top h1.title{font-family:"Kosugi Maru","Hiragino Maru Gothic ProN","Noto Sans JP",sans-serif}
 .top h1.title .ln{display:block;margin:0 -16px 0 -6px;white-space:nowrap;font-size:clamp(16px,5.5vw,26px);font-weight:700}
 .top h1.title .big{font-size:clamp(34px,11vw,50px);font-weight:800}
+/* ヒーロー見出し：左からシュワッと1行ずつ（読み込み時に1回だけ） */
+@keyframes heroIn{from{opacity:0;transform:translateX(-56px)}to{opacity:1;transform:translateX(0)}}
+.top h1.title .ln{animation:heroIn .75s cubic-bezier(.22,.8,.28,1) both}
+.top h1.title .ln:nth-of-type(2){animation-delay:.16s}
+.top h1.title .ln:nth-of-type(3){animation-delay:.32s}
+@media (prefers-reduced-motion:reduce){.top h1.title .ln{animation:none}}
 .top h1.title .ln.sm{font-size:clamp(19px,6vw,27px)}
 .top h1{position:relative;font-size:27px;line-height:1.35;margin:0 0 8px;letter-spacing:.02em}
 .top h1 em{font-style:normal;color:#fff}
