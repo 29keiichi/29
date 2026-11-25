@@ -49,16 +49,18 @@ gtag('config', 'G-LD1ZVN14HT');
 .top h1.title .ln{animation:heroIn .75s cubic-bezier(.22,.8,.28,1) both}
 .top h1.title .ln:nth-of-type(2){animation-delay:.16s}
 .top h1.title .ln:nth-of-type(3){animation-delay:.32s}
-@media (prefers-reduced-motion:reduce){.top h1.title .ln,.top h1.title .ln:nth-of-type(3) .big,.top h1.title .ln:nth-of-type(3) .big .rays,.top h1.title .ln:nth-of-type(3) .big .uline path{animation:none}.top h1.title .ln:nth-of-type(3) .big{transform:rotate(-4deg) translateY(.045em)}.top h1.title .ln:nth-of-type(3) .big .uline path{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){.top h1.title .ln,.top h1.title .ln:nth-of-type(3) .big,.top h1.title .ln:nth-of-type(3) .big .rays,.top h1.title .ln:nth-of-type(3) .big .uline{animation:none}.top h1.title .ln:nth-of-type(3) .big{transform:rotate(-4deg) translateY(.045em)}.top h1.title .ln:nth-of-type(3) .big .uline{clip-path:none}}
 /* 試作：シュワーの後に「イチロー」が傾いて三本線がピョンと出る */
 @keyframes ichiroTilt{0%{transform:rotate(0deg) scale(1) translateY(0)}55%{transform:rotate(-5.5deg) scale(1.07) translateY(.02em)}100%{transform:rotate(-4deg) scale(1.03) translateY(.045em)}}
 @keyframes raysPop{0%{transform:scale(0);opacity:0}60%{transform:scale(1.25);opacity:1}100%{transform:scale(1);opacity:1}}
 .top h1.title .ln:nth-of-type(3) .big{position:relative;display:inline-block;animation:ichiroTilt .45s ease-out 1.15s both}
 .top h1.title .ln:nth-of-type(3) .big .rays{position:absolute;top:-.36em;right:-.44em;width:.9em;height:.9em;pointer-events:none;transform-origin:30% 82%;animation:raysPop .38s cubic-bezier(.34,1.56,.64,1) 1.38s both}
-@keyframes ulineDraw{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
-.top h1.title .ln:nth-of-type(3) .big .uline{position:absolute;left:0;bottom:-.14em;width:100%;height:.18em;overflow:visible;pointer-events:none}
-.top h1.title .ln:nth-of-type(3) .big .uline path{fill:none;stroke:#FFDE8A;stroke-width:5.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:100;stroke-dashoffset:100;animation:ulineDraw .45s ease-out 1.52s both}
-.top h1.title .ln:nth-of-type(3) .big .uline path.echo{stroke-width:2.2;opacity:.4}
+@keyframes ulineWipe{from{clip-path:inset(-30% 100% -30% 0)}to{clip-path:inset(-30% 0% -30% 0)}}
+.top h1.title .ln:nth-of-type(3) .big .uline{position:absolute;left:0;bottom:-.22em;width:100%;height:.26em;overflow:visible;pointer-events:none;animation:ulineWipe .45s ease-out 1.52s both}
+.top h1.title .ln:nth-of-type(3) .big .uline path{fill:none;stroke:#FFDE8A;stroke-linecap:round;stroke-linejoin:round}
+.top h1.title .ln:nth-of-type(3) .big .uline path.base{stroke-width:11.5;opacity:.8}
+.top h1.title .ln:nth-of-type(3) .big .uline path.core{stroke-width:6.5;opacity:.55}
+.top h1.title .ln:nth-of-type(3) .big .uline path.scratch{stroke-width:13;opacity:.3;stroke-dasharray:7 3 2 4 9 3 5 2;stroke-dashoffset:4}
 .top h1.title .ln.sm{font-size:clamp(19px,6vw,27px)}
 .top h1{position:relative;font-size:27px;line-height:1.35;margin:0 0 8px;letter-spacing:.02em}
 .top h1 em{font-style:normal;color:#fff}
@@ -211,7 +213,7 @@ dl.info dd{margin:0}
   <div class="ptr" id="ptr"><i></i>更新中…</div>
 
   <section class="top">
-    <h1 class="title"><span class="ln"><span class="big">はじめて</span>の</span><span class="ln"><span class="big">エアコン掃除</span>なら、</span><span class="ln"><span class="big">イチロー<svg class="rays" viewBox="0 0 40 40" fill="none" stroke="#FFDE8A" stroke-width="4.5" stroke-linecap="butt" aria-hidden="true"><path d="M12 25 L12 14"/><path d="M17.1 26.9 L24.2 18.4"/><path d="M19.9 31.6 L30.7 29.7"/></svg><svg class="uline" viewBox="0 0 120 12" preserveAspectRatio="none" aria-hidden="true"><path pathLength="100" d="M3 7 L15 5.6 L27 8.2 L39 6.1 L51 7.8 L63 5.9 L75 8.1 L87 6.4 L99 7.6 L111 6.2 L117 7"/><path class="echo" pathLength="100" d="M4 8.6 L20 7.4 L36 9.2 L54 7.8 L72 9.4 L90 8 L106 9 L116 8.2"/></svg></span>にお任せください！</span></h1>
+    <h1 class="title"><span class="ln"><span class="big">はじめて</span>の</span><span class="ln"><span class="big">エアコン掃除</span>なら、</span><span class="ln"><span class="big">イチロー<svg class="rays" viewBox="0 0 40 40" fill="none" stroke="#FFDE8A" stroke-width="4.5" stroke-linecap="butt" stroke-linejoin="round" aria-hidden="true"><g stroke-width="7" opacity=".28" stroke-dasharray="5 3"><path d="M12 25 L11.4 19.5 L12 14"/><path d="M17.1 26.9 L20.9 22.4 L24.2 18.4"/><path d="M19.9 31.6 L25.5 30.9 L30.7 29.7"/></g><path d="M12 25 L11.4 19.5 L12 14"/><path d="M17.1 26.9 L20.9 22.4 L24.2 18.4"/><path d="M19.9 31.6 L25.5 30.9 L30.7 29.7"/></svg><svg class="uline" viewBox="0 0 120 16" preserveAspectRatio="none" aria-hidden="true"><path class="scratch" d="M3 8.2 L18 6.8 L33 9.2 L48 7.2 L66 9.1 L81 7 L96 9 L110 7.4 L117 8.2"/><path class="base" d="M3 8 L15 6.4 L27 9.4 L39 7 L51 9 L63 6.8 L75 9.3 L87 7.3 L99 8.8 L111 7.1 L117 8"/><path class="core" d="M4 8.8 L20 7.6 L36 9.6 L54 7.9 L72 9.8 L90 8.1 L106 9.3 L116 8.4"/></svg></span>にお任せください！</span></h1>
     <figure class="hero-strip"><img src="https://lh3.googleusercontent.com/d/1YCTYbFFmm3h-j845i3FFlQ2zNQpSqd8X" alt="エアコンを掃除する店長" width="2400" height="3000"><figcaption>店長　青木 敬一郎</figcaption></figure>
     <p class="lead">写真の店長が、ご自宅に伺います。</p>
     <div class="stats">
