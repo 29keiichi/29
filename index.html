@@ -53,7 +53,7 @@ gtag('config', 'G-LD1ZVN14HT');
 /* 試作：シュワーの後に「イチロー」が傾いて三本線がピョンと出る */
 @keyframes ichiroTilt{0%{transform:rotate(0deg) scale(1) translateY(0)}55%{transform:rotate(-5.5deg) scale(1.07) translateY(.02em)}100%{transform:rotate(-4deg) scale(1.03) translateY(.045em)}}
 @keyframes raysPop{0%{transform:scale(0);opacity:0}60%{transform:scale(1.25);opacity:1}100%{transform:scale(1);opacity:1}}
-.top h1.title .ln:nth-of-type(3) .big{position:relative;display:inline-block;animation:ichiroTilt .45s ease-out 1.15s both}
+.top h1.title .ln:nth-of-type(3) .big{position:relative;display:inline-block;-webkit-text-stroke:.045em currentColor;animation:ichiroTilt .45s ease-out 1.15s both}
 .top h1.title .ln:nth-of-type(3) .big .rays{position:absolute;top:-.36em;right:-.44em;width:.9em;height:.9em;pointer-events:none;transform-origin:30% 82%;animation:raysPop .38s cubic-bezier(.34,1.56,.64,1) 1.38s both}
 @keyframes ulineWipe{from{clip-path:inset(-30% 100% -30% 0)}to{clip-path:inset(-30% 0% -30% 0)}}
 .top h1.title .ln:nth-of-type(3) .big .uline{position:absolute;left:0;bottom:-.22em;width:100%;height:.26em;overflow:visible;pointer-events:none;animation:ulineWipe .45s ease-out 1.52s both}
